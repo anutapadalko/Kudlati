@@ -1,7 +1,4 @@
 {% load static %}
-
-{% block content %}
-
 <!DOCTYPE html>
 
 <head>
@@ -31,6 +28,9 @@
 
 <body>
   {% include "main/header.html" %}
+
+  {% block content %}
+
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <defs>
       <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
@@ -1215,7 +1215,7 @@
     crossorigin="anonymous"></script>
   <script src="{% static 'js/plugins.js' %}"></script>
   <script src="{% static 'js/script.js' %}"></script>
+  {% endblock %}
 </body>
 
 </html>
-{% endblock %}
