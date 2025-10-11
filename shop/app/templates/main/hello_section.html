@@ -3,7 +3,7 @@
 
 {% block content %}
 <section class="py-3"
-    style="background-image: url('images/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
+    style="background-image: url('{% static 'images/background-pattern.jpg' %}');background-repeat: no-repeat;background-size: cover;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="banner-ad bg-success-subtle block-2"
-                        style="background:url('images/ad-image-1.png') no-repeat;background-position: right bottom">
+                        style="background:url('{% static 'images/ad-image-1.png' %}') no-repeat;background-position: right bottom">
                         <div class="row banner-content p-5">
 
                             <div class="content-wrapper col-md-7">
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="banner-ad bg-danger block-3"
-                        style="background:url('images/ad-image-2.png') no-repeat;background-position: right bottom">
+                        style="background:url('{% static 'images/ad-image-2.png' %}') no-repeat;background-position: right bottom">
                         <div class="row banner-content p-5">
 
                             <div class="content-wrapper col-md-7">
