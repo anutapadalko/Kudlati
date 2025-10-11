@@ -9,7 +9,7 @@ urlpatterns = [
     path("discount-by-email/", DiscountByEmailView.as_view(),
          name="discount_by_email"),
     path("header/", HeaderView.as_view(), name="header"),
-    path("hello-section/", HelloSectionView.as_view(), name="hello_section"),
+    path("hello_section/", HelloSectionView.as_view(), name="hello_section"),
     path("newly-arrived/", NewlyArrivedView.as_view(),
          name="newly_arrived"),
     path("trending-products/", TrendingProductsView.as_view(),

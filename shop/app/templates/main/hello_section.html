@@ -1,4 +1,7 @@
-{% load static%}
+{% extends 'main/index.html' %}
+{% load static i18n%}
+
+{% block content %}
 <section class="py-3"
     style="background-image: url('images/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
     <div class="container-fluid">
@@ -108,3 +111,4 @@
         </div>
     </div>
 </section>
+{% endblock %}
