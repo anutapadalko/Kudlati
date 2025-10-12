@@ -3,11 +3,7 @@ from django.views.generic import TemplateView
 class IndexView(TemplateView):
     template_name = 'pages/index.html'
     title = ''
-
-class FooterView(TemplateView):
-    template_name = 'main/footer.html'
-    title = ''
-
+    
 class OffersView(TemplateView):
     template_name = 'main/offers.html'
     title = ''
