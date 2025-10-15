@@ -1,19 +1,17 @@
+from .views import IndexView, HeaderView, HelloSectionView, AboutView, ShopView, FooterView, OffersView, AppView, NewsView, NoveltyView, TheMostPopularView, SingInView
 from django.urls import path
-from .views import IndexView, BestSellingProductsView, CategoriesView, DiscountByEmailView, HeaderView, HelloSectionView, NewlyArrivedView, TrendingProductsView, TwoOfferBlocksView
-
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
-    path("best-selling-products/", BestSellingProductsView.as_view(),
-         name="best_selling_products"),
-    path("categories/", CategoriesView.as_view(), name="categories"),
-    path("discount-by-email/", DiscountByEmailView.as_view(),
-         name="discount_by_email"),
     path("header/", HeaderView.as_view(), name="header"),
     path("hello_section/", HelloSectionView.as_view(), name="hello_section"),
-    path("newly-arrived/", NewlyArrivedView.as_view(),
-         name="newly_arrived"),
-    path("trending-products/", TrendingProductsView.as_view(),
-         name="trending_products"),
-    path("two-offer-blocks/", TwoOfferBlocksView.as_view(),
-         name="two_offer_blocks"),
+    path("about/", AboutView.as_view(), name="about"),
+    path("shop/", ShopView.as_view(), name="shop"),
+    path("/footer/", FooterView.as_view(), name="footre"),
+    path("/offers/", OffersView.as_view(), name="offers"),
+    path("/app/", AppView.as_view(), name="app"),
+    path("/news/", NewsView.as_view(), name="news"),
+    path("/novelty/", NoveltyView.as_view(), name="novelty"),
+    path("/the_most_popular/", TheMostPopularView.as_view(),
+         name="the_most_popular"),
+    path("/sing_in/", SingInView.as_view(), name="sing_in")
 ]

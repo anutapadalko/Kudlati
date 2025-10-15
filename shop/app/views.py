@@ -2,22 +2,7 @@ from django.views.generic import TemplateView
 
 
 class IndexView(TemplateView):
-    template_name = 'main/index.html'
-    title = ''
-
-
-class BestSellingProductsView(TemplateView):
-    template_name = 'main/best_selling_products.html'
-    title = ''
-
-
-class CategoriesView(TemplateView):
-    template_name = 'main/categories.html'
-    title = ''
-
-
-class DiscountByEmailView(TemplateView):
-    template_name = 'main/discount_by_email.html'
+    template_name = 'pages/index.html'
     title = ''
 
 
@@ -31,16 +16,46 @@ class HelloSectionView(TemplateView):
     title = ''
 
 
-class NewlyArrivedView(TemplateView):
-    template_name = 'main/newly_arrived.html'
+class AboutView(TemplateView):
+    template_name = "main/about.html"
+    title = ""
+
+
+class ShopView(TemplateView):
+    template_name = "main/shop.html"
+    title = ""
+
+
+class FooterView(TemplateView):
+    template_name = 'main/footer.html'
     title = ''
 
 
-class TrendingProductsView(TemplateView):
-    template_name = 'main/trending_products.html'
+class OffersView(TemplateView):
+    template_name = 'main/offers.html'
     title = ''
 
 
-class TwoOfferBlocksView(TemplateView):
-    template_name = 'main/two_offer_blocks.html'
+class AppView(TemplateView):
+    template_name = 'main/app.html'
+    title = ''
+
+
+class NewsView(TemplateView):
+    template_name = 'main/news.html'
+    title = ''
+
+
+class NoveltyView(TemplateView):
+    template_name = 'main/novelty.html'
+    title = ''
+
+
+class TheMostPopularView(TemplateView):
+    template_name = 'main/the_most_popular.html'
+    title = ''
+
+
+class SingInView(TemplateView):
+    template_name = 'main/sing_in.html'
     title = ''
