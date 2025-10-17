@@ -3,25 +3,17 @@ from django.views.generic import TemplateView
 class IndexView(TemplateView):
     template_name = 'pages/index.html'
     title = ''
-    
-class OffersView(TemplateView):
-    template_name = 'main/offers.html'
+
+class BlogView(TemplateView):
+    template_name = 'main/blog.html'
     title = ''
 
-class AppView(TemplateView):
-    template_name = 'main/app.html'
+class SaleView(TemplateView):
+    template_name = 'main/sale.html'
     title = ''
 
-class NewsView(TemplateView):
-    template_name = 'main/news.html'
-    title = ''
-
-class NoveltyView(TemplateView):
-    template_name = 'main/novelty.html'
-    title = ''
-
-class TheMostPopularView(TemplateView):
-    template_name = 'main/the_most_popular.html'
+class ShopView(TemplateView):
+    template_name = 'main/shop.html'
     title = ''
 
 class SingInView(TemplateView):

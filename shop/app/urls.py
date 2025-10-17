@@ -1,11 +1,10 @@
 from django.urls import path
-from .views import IndexView, FooterView, OffersView, AppView, NewsView, NoveltyView, TheMostPopularView, SingInView
+from .views import IndexView, BlogView, SaleView, ShopView, SingInView
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
-    path("/app/", AppView.as_view(), name="app"),
-    path("/news/", NewsView.as_view(), name="news"),
-    path("/novelty/", NoveltyView.as_view(), name="novelty"),
-    path("/the_most_popular/", TheMostPopularView.as_view(), name="the_most_popular"),
+    path("/blog/", BlogView.as_view(), name="blog"),
+    path("/sale/", SaleView.as_view(), name="sale"),
+    path("/shop/", ShopView.as_view(), name="shop"),
     path("/sing_in/", SingInView.as_view(), name="sing_in")
 ]
