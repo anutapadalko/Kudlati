@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,11 +26,11 @@
     {% block extra_head %}{% endblock %}
   </head>
   <body>
-    {% include "include/header.html" %}
-    <main class="container">
+    {% include "includes/header.html" %}
+    <main class="container-fluid">
       {% block content %}{% endblock %}
     </main>
-    {% include "include/footer.html" %}
+    {% include "includes/footer.html" %}
     {% block extra_js %}{% endblock %}
   </body>
 </html>
