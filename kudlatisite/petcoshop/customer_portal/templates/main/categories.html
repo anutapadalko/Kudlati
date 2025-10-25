@@ -1,3 +1,7 @@
+{% extends 'main.html' %}
+{% load static i18n %}
+
+{% block content %}
 <section class="py-5 overflow-hidden">
     <div class="container-fluid">
         <div class="row">
@@ -23,51 +27,44 @@
                 <div class="category-carousel swiper">
                     <div class="swiper-wrapper">
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-bread-baguette.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-bread-baguette.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Breads & Sweets</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-soft-drinks-bottle.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-soft-drinks-bottle.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-wine-glass-bottle.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-wine-glass-bottle.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-animal-products-drumsticks.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-animal-products-drumsticks.png' %}"
+                                alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-bread-herb-flour.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-bread-herb-flour.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
                         <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
-                            <h3 class="category-title">Fruits & Veges</h3>
-                        </a>
-                        <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
-                            <h3 class="category-title">Fruits & Veges</h3>
-                        </a>
-                        <a href="index.html" class="nav-link category-item swiper-slide">
-                            <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
+                            <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="Category Thumbnail">
                             <h3 class="category-title">Fruits & Veges</h3>
                         </a>
 
@@ -78,3 +75,4 @@
         </div>
     </div>
 </section>
+{% endblock %}

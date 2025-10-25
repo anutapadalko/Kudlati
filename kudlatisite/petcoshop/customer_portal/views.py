@@ -11,5 +11,6 @@ class SaleView(TemplateView):
 class ShopView(TemplateView):
     template_name = "main/shop.html"
 
-class SignInView(TemplateView):
-    template_name = "main/sign_in.html"
+class AboutView(TemplateView):
+    template_name = "main/about.html"
+    
