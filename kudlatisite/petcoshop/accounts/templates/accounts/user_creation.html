@@ -1,0 +1,66 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="bg-secondary py-5 my-5 rounded-5"
+     style="background: url('{% static 'images/bg-leaves-img-pattern.png' %}') no-repeat center/cover;">
+  <div class="container my-5">
+    <div class="row align-items-center">
+
+      <!-- Ліва частина -->
+      <div class="col-md-6 p-5 text-light">
+        <h2 class="display-5 fw-bold">
+          Приєднуйтесь до <span class="text-warning">PetCoShop</span> 🐾
+        </h2>
+        <p class="lead">
+          Створіть обліковий запис, щоб купувати товари для ваших улюбленців, відстежувати замовлення та отримувати знижки.
+        </p>
+      </div>
+
+      <!-- Права частина -->
+      <div class="col-md-6 p-5">
+        <div class="bg-white rounded-4 shadow-lg p-4">
+          <h3 class="mb-4 text-center">Створити акаунт</h3>
+
+          <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="username" class="form-label">Ім’я користувача</label>
+              <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Введіть ім’я користувача">
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="you@example.com">
+            </div>
+
+            <div class="mb-3">
+              <label for="password1" class="form-label">Пароль</label>
+              <input type="password" class="form-control form-control-lg" id="password1" name="password1" placeholder="••••••••">
+            </div>
+
+            <div class="mb-3">
+              <label for="password2" class="form-label">Підтвердіть пароль</label>
+              <input type="password" class="form-control form-control-lg" id="password2" name="password2" placeholder="••••••••">
+            </div>
+
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-success btn-lg">Зареєструватися</button>
+            </div>
+
+            <div class="text-center">
+              <p class="mb-0">Вже маєте акаунт?</p>
+              <a href="{% url 'accounts:login' %}" class="text-decoration-none">Увійти</a>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
