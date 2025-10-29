@@ -1,9 +1,10 @@
 {% load static i18n %}
+{% get_current_language as CURRENT_LANG %}
 <header>
   <div class="container-fluid">
-    <div class="header-bar py-1 border-bottom">
+    <div class="header-bar py-1 border-bottom d-flex align-items-center justify-content-between gap-2">
       <!-- Left: logo + menu -->
-      <div class="left-side">
+      <div class="left-side d-flex align-items-center">
         <div class="main-logo">
           <a href="/"><img src="{% static 'images/icon_k_color.svg' %}" alt="logo" style="height:48px;" class="img-fluid"></a>
         </div>
@@ -15,7 +16,7 @@
       </div>
 
       <!-- Center: search -->
-      <div class="center d-none d-lg-flex">
+      <div class="center d-none d-lg-flex flex-grow-1 px-3">
         <div class="search-bar d-flex align-items-center bg-light rounded-4">
           <form id="search-form" class="flex-grow-1" action="#" method="get">
             <input type="text" class="form-control border-0 bg-transparent" placeholder="Search products" />
@@ -28,21 +29,25 @@
         </div>
       </div>
 
-      <!-- Right: actions + cart -->
-      <div class="right-side">
+      <!-- Right: lang + icons + cart -->
+      <div class="right-side d-none d-lg-flex align-items-center ms-2">
         <div class="language-buttons d-flex align-items-center me-2">
           <img src="{% static 'images/globe-icon.svg' %}" alt="Language" style="width: 24px; height: 24px;" class="me-1">
+          {% with CUR_LANG=CURRENT_LANG|default:"en"|slice:":2" %}
           <form method="post" action="{% url 'set_language' %}">{% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit" name="language" value="uk" class="lang-btn {% if LANGUAGE_CODE == 'uk' %}active{% endif %}">UA</button>
+            <button type="submit" name="language" value="uk"
+                    class="lang-btn {% if CUR_LANG == 'uk' %}active{% endif %}">UA</button>
           </form>
           <form method="post" action="{% url 'set_language' %}">{% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit" name="language" value="en" class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}">EN</button>
+            <button type="submit" name="language" value="en"
+                    class="lang-btn {% if CUR_LANG == 'en' %}active{% endif %}">EN</button>
           </form>
+          {% endwith %}
         </div>
 
-        <ul class="d-none d-lg-flex list-unstyled m-0">
+        <ul class="d-flex list-unstyled m-0">
           <li><a href="#" class="rounded-circle bg-light p-2 mx-1">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
@@ -55,7 +60,7 @@
           </li>
         </ul>
 
-        <div class="cart-block text-center d-none d-lg-flex position-relative">
+        <div class="cart-block text-center d-flex position-relative ms-1">
           <button class="border-0 bg-transparent p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
             <img src="{% static 'images/shopping-cart.png' %}" alt="Cart" width="24" height="24">
           </button>

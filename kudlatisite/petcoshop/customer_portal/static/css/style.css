@@ -985,21 +985,21 @@ h6 {
   --bs-gutter-x: .5rem;
   padding: 6px 10px !important;
   border-radius: 20px;
-  width: 260px;
-  max-width: 260px;
+  width: 320px;
+  max-width: 320px;
 }
 
 @media (min-width: 1200px) {
   .search-bar {
-    width: 320px;
-    max-width: 320px;
+    width: 420px;
+    max-width: 420px;
   }
 }
 
 @media (min-width: 1400px) {
   .search-bar {
-    width: 360px;
-    max-width: 360px;
+    width: 520px;
+    max-width: 520px;
   }
 }
 
@@ -1042,4 +1042,25 @@ h6 {
 /* меню трохи далі від логотипа */
 .header-menu {
   margin-left: 1rem;
+}
+
+.language-buttons .lang-btn {
+  font-weight: 500;
+}
+
+.language-buttons .lang-btn.active {
+  font-weight: 800 !important;
+}
+
+.header-bar .center {
+  flex: 1 1 auto;
+  min-width: 260px;
+}
+
+.right-side ul {
+  margin: 0;
+}
+
+.language-buttons form {
+  margin: 0 2px;
 }
