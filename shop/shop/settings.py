@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# де зберігатимуться переклади (.po/.mo)
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # має бути після Session і перед Common
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -105,17 +107,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'en'      # базова мова (можеш змінити на 'uk')
 USE_I18N = True
-
-USE_TZ = True
-
 LANGUAGES = [
+    ('uk', 'Українська'),
     ('en', 'English'),
-    ('uk', 'Ukrainian'),
 ]
 
 # Static files (CSS, JavaScript, Images)

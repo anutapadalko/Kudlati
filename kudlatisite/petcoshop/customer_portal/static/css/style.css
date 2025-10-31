@@ -1064,3 +1064,53 @@ h6 {
 .language-buttons form {
   margin: 0 2px;
 }
+
+
+/* Language switcher – header style */
+.language-buttons {
+  position: static;
+  top: auto;
+  right: auto;
+  padding: 0;
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  height: 40px;
+  border-radius: 9999px;
+}
+
+.lang-switch img {
+  width: 18px;
+  height: 18px;
+  opacity: .85;
+}
+
+.lang-switch .divider {
+  color: #adb5bd;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.lang-switch .lang-btn {
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  line-height: 1;
+  font-weight: 600;
+  color: #000;
+}
+
+.lang-switch .lang-btn:hover {
+  background: #efefef;
+}
+
+.lang-switch .lang-btn.active {
+  background: #fff;
+  box-shadow: 0 0 0 1px #efefef inset;
+  font-weight: 800;
+}
