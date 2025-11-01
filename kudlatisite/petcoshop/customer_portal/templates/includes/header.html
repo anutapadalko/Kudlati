@@ -41,13 +41,13 @@
                 class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                 <div class="language-buttons d-flex align-items-center">
                     <img src="{% static 'images/globe-icon.svg' %}" alt="Language" style="width: 24px; height: 24px;" class="me-1">
-                    <form method="post" action="{% url 'set_language' %}">
+                    <form method="post"action="{# {% url 'set_language' %} #}">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ request.path }}">
                         <button type="submit" name="language" value="uk"
                                 class="lang-btn {% if LANGUAGE_CODE == 'uk' %}active{% endif %}">UA</button>
                     </form>
-                    <form method="post" action="{% url 'set_language' %}">
+                    <form method="post" action="{# {% url 'set_language' %} #}">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ request.path }}">
                         <button type="submit" name="language" value="en"
@@ -124,7 +124,7 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
                                 <li class="nav-item">
-                                    <a href="{% url 'customer_portal:about' %}" class="nav-link{% if request.path == '/about/' %} active{% endif %}">About Us</a>
+                                    <a href="{#{% url 'customer_portal:about' %}#}" class="nav-link{% if request.path == '/about/' %} active{% endif %}">About Us</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'customer_portal:shop' %}" class="nav-link{% if request.path == '/shop/' %} active{% endif %}">Shop</a>
@@ -137,6 +137,7 @@
                         </div>
 
                     </div>
+                </nav>
             </div>
         </div>
     </div>

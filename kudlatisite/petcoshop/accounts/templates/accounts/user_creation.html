@@ -25,25 +25,25 @@
 
           <form method="post">
             {% csrf_token %}
-
             <div class="mb-3">
-              <label for="username" class="form-label">Ім’я користувача</label>
-              <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Введіть ім’я користувача">
+              {{ form.username.label_tag }}
+              {{ form.username }}
             </div>
-
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="you@example.com">
+              {{ form.email.label_tag }}
+              {{ form.email }}
             </div>
-
             <div class="mb-3">
-              <label for="password1" class="form-label">Пароль</label>
-              <input type="password" class="form-control form-control-lg" id="password1" name="password1" placeholder="••••••••">
+              {{ form.password1.label_tag }}
+              {{ form.password1 }}
             </div>
-
             <div class="mb-3">
-              <label for="password2" class="form-label">Підтвердіть пароль</label>
-              <input type="password" class="form-control form-control-lg" id="password2" name="password2" placeholder="••••••••">
+              {{ form.password2.label_tag }}
+              {{ form.password2 }}
+            </div>
+            <div class="mb-3">
+              {{ form.account_type.label_tag }}
+              {{ form.account_type }}
             </div>
 
             <div class="d-grid mb-3">
