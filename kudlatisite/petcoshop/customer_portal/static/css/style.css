@@ -1111,6 +1111,11 @@ h6 {
 
 .lang-switch .lang-btn.active {
   background: #fff;
-  box-shadow: 0 0 0 1px #efefef inset;
-  font-weight: 800;
+  box-shadow: 0 0 0 1.5px #efefef inset;
+  font-weight: 600;
+  /* було 800 */
+  /* можна додати трохи темніший текст */
+  color: #222;
+  /* плавний перехід */
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
