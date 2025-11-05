@@ -1,143 +1,75 @@
 {% load static i18n %}
+{% get_current_language as CURRENT_LANG %}
 <header>
-    <div class="container-fluid">
-        <div class="row py-1 border-bottom align-items-center">
-
-            <div class="col-sm-4 col-lg-3 d-flex align-items-center justify-content-center justify-content-sm-start">
-                <div class="main-logo">
-                    <a href="index.html">
-                        <img src="{% static 'images/icon_k_color.svg' %}" alt="logo" style="height:48px;" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
-                <div class="search-bar row bg-light p-2 my-2 rounded-4">
-                    <div class="col-md-4 d-none d-md-block">
-                        <select class="form-select border-0 bg-transparent">
-                            <option>{% trans "All Categories" %}</option>
-                            <option>{% trans "Shampoo" %}</option>
-                            <option>{% trans "Mousse" %}</option>
-                            <option>{% trans "Conditioner" %}</option>
-                            <option>{% trans "Paw soap" %}</option>
-                        </select>
-                    </div>
-                    <div class="col-11 col-md-7">
-                        <form id="search-form" class="text-center" action="index.html" method="post">
-                            <input type="text" class="form-control border-0 bg-transparent"
-                                placeholder="Search products" />
-                        </form>
-                    </div>
-                    <div class="col-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
-                <div class="language-buttons d-flex align-items-center">
-                    <img src="{% static 'images/globe-icon.svg' %}" alt="Language" style="width: 24px; height: 24px;" class="me-1">
-                    <form method="post" action="{% url 'set_language' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button type="submit" name="language" value="uk"
-                                class="lang-btn {% if LANGUAGE_CODE == 'uk' %}active{% endif %}">UA</button>
-                    </form>
-                    <form method="post" action="{% url 'set_language' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button type="submit" name="language" value="en"
-                                class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}">EN</button>
-                    </form>
-                </div>
-
-                <ul class="d-flex justify-content-end list-unstyled m-0">
-                    <li>
-                        <a href="#" class="rounded-circle bg-light p-2 mx-1">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="8" r="4"/>
-                            <path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="rounded-circle bg-light p-2 mx-1">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M12 21C12 21 4 13.5 4 8.5C4 5.5 6.5 3 9.5 3C11.24 3 12 4.5 12 4.5C12 4.5 12.76 3 14.5 3C17.5 3 20 5.5 20 8.5C20 13.5 12 21 12 21Z"/>
-                             </svg>
-                        </a>
-                    </li>
-                    <li class="d-lg-none">
-                        <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                            <svg width="24" height="24" viewBox="0 0 24 24">
-                                <use xlink:href="#cart"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="d-lg-none">
-                        <a href="#" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                            <svg width="24" height="24" viewBox="0 0 24 24">
-                                <use xlink:href="#search"></use>
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-                                
-                <div class="cart-block text-center d-none d-lg-block">
-                    <button class="border-0 bg-transparent p-0" type="button"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                        <img src="{% static 'images/shopping-cart.png' %}" alt="Cart" style="width:24px; height:24px;">
-                    </button>
-                    <div class="cart-sum mt-0" style="font-weight:400; font-size:16px;">
-                        $1290.00
-                    </div>
-                </div>
-                                
-            </div>
-
+  <div class="container-fluid">
+    <div class="header-bar py-1 border-bottom d-flex align-items-center justify-content-between gap-2">
+      <!-- Left: logo + menu -->
+      <div class="left-side d-flex align-items-center">
+        <div class="main-logo">
+          <a href="/"><img src="{% static 'images/icon_k_color.svg' %}" alt="logo" style="height:48px;" class="img-fluid"></a>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row py-3">
-            <div class="d-flex  justify-content-center justify-content-sm-between align-items-center">
-                <nav class="main-menu d-flex navbar navbar-expand-lg">
+        <ul class="header-menu list-unstyled d-none d-lg-flex align-items-center mb-0">
+          <li><a href="{% url 'customer_portal:about' %}" class="menu-link{% if request.path == '/about/' %} active{% endif %}">{% trans "About Us" %}</a></li>
+          <li><a href="{% url 'customer_portal:shop' %}" class="menu-link{% if request.path == '/shop/' %} active{% endif %}">{% trans "Shop" %}</a></li>
+          <li><a href="/sale/" class="menu-link{% if request.path == '/sale/' %} active{% endif %}">{% trans "Sale" %}</a></li>
+        </ul>
+      </div>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-                        aria-labelledby="offcanvasNavbarLabel">
-
-                        <div class="offcanvas-header justify-content-center">
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
-                        </div>
-
-                        <div class="offcanvas-body">
-                            <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                                <li class="nav-item">
-                                    <a href="{% url 'customer_portal:about' %}" class="nav-link{% if request.path == '/about/' %} active{% endif %}">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'customer_portal:shop' %}" class="nav-link{% if request.path == '/shop/' %} active{% endif %}">Shop</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/sale/" class="nav-link{% if request.path == '/sale/' %} active{% endif %}">Sale</a>
-                                </li>
-                            </ul>
-
-                        </div>
-
-                    </div>
-            </div>
+      <!-- Center: search -->
+      <div class="center d-none d-lg-flex flex-grow-1 px-3">
+        <div class="search-bar d-flex align-items-center bg-light rounded-4">
+          <form id="search-form" class="flex-grow-1" action="#" method="get">
+            <input type="text" class="form-control border-0 bg-transparent" placeholder="{% trans 'Search products' %}" />
+          </form>
+          <div class="ms-2 d-flex align-items-center" aria-label="{% trans 'Search' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+            </svg>
+          </div>
         </div>
+      </div>
+
+      <!-- Right: lang + icons + cart -->
+      <div class="right-side d-none d-lg-flex align-items-center ms-2">
+        <div class="language-buttons d-flex align-items-center me-2">
+          <div class="lang-switch rounded-pill bg-light d-flex align-items-center">
+            <img src="{% static 'images/globe-icon.svg' %}" alt="{% trans 'Language' %}" class="me-2" width="18" height="18">
+            {% with CUR_LANG=CURRENT_LANG|default:"en"|slice:":2" %}
+            <form method="post" action="{% url 'set_language' %}" class="m-0">{% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit" name="language" value="uk"
+                      class="lang-btn {% if CUR_LANG == 'uk' %}active{% endif %}">UA</button>
+            </form>
+            <span class="divider">/</span>
+            <form method="post" action="{% url 'set_language' %}" class="m-0">{% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit" name="language" value="en"
+                      class="lang-btn {% if CUR_LANG == 'en' %}active{% endif %}">EN</button>
+            </form>
+            {% endwith %}
+          </div>
+        </div>
+
+        <ul class="d-flex list-unstyled m-0">
+          <li><a href="#" class="rounded-circle bg-light p-2 mx-1" aria-label="{% trans 'Account' %}">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
+            </svg></a>
+          </li>
+          <li><a href="#" class="rounded-circle bg-light p-2 mx-1" aria-label="{% trans 'Wishlist' %}">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 21C12 21 4 13.5 4 8.5C4 5.5 6.5 3 9.5 3C11.24 3 12 4.5 12 4.5C12 4.5 12.76 3 14.5 3C17.5 3 20 5.5 20 8.5C20 13.5 12 21 12 21Z"/>
+            </svg></a>
+          </li>
+        </ul>
+
+        <div class="cart-block text-center d-flex position-relative ms-1">
+          <button class="border-0 bg-transparent p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+            <img src="{% static 'images/shopping-cart.png' %}" alt="{% trans 'Cart' %}" width="24" height="24">
+          </button>
+          <div class="cart-sum">$1290</div>
+        </div>
+      </div>
     </div>
+  </div>
 </header>
