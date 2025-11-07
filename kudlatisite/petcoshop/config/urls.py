@@ -22,7 +22,7 @@ urlpatterns = [
     path("", include(("customer_portal.urls", "customer_portal"), namespace="customer_portal")),
     path("catalog/", include("catalog.urls")),
     path("orders/", include("orders.urls")),
-    path("account/", include("accounts.urls")),
+    path("account/", include(("accounts.urls",  "accounts"), namespace="accounts")),
     path("owner/", include("owner_dashboard.urls")),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
