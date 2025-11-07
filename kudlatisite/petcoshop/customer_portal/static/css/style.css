@@ -261,7 +261,22 @@ body {
 }
 
 body {
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
+  /* було 0.03em – спотворювало вигляд Rubik */
+}
+
+/* Щоб браузер не “домальовував” жирність */
+.about-hero-v2 .hero-title,
+.about-hero-v2 .hero-subtitle,
+.about-hero-v2 .hero-text {
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 0;
+  font-kerning: normal;
+  font-synthesis: none;
+  /* важливо */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -1118,4 +1133,175 @@ h6 {
   color: #222;
   /* плавний перехід */
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+/* Створення CSS-змінних з кольорів brandkit */
+.about-hero-v2 {
+  position: relative;
+  height: 750px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: cover;
+  overflow: hidden;
+  margin-top: 0;
+  /* було: calc(var(--header-height-min) * -1) */
+}
+
+.about-hero-v2 .hero-title {
+  position: absolute;
+  top: calc(220px - var(--header-height-min));
+  /* компенсуємо прибирання negative margin */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  font-size: 85px;
+  line-height: 1.1;
+  color: #000;
+  text-align: center;
+}
+
+.about-hero-v2 .hero-subtitle {
+  position: absolute;
+  top: calc(320px - var(--header-height-min));
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.3;
+  color: #000;
+  text-align: center;
+}
+
+.about-hero-v2 .hero-text {
+  position: absolute;
+  top: calc(400px - var(--header-height-min));
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  max-width: 600px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #000;
+  text-align: center;
+}
+
+/* Hero: точніший вигляд Rubik, без глобального letter-spacing */
+.about-hero-v2 .hero-title,
+.about-hero-v2 .hero-subtitle,
+.about-hero-v2 .hero-text {
+  letter-spacing: 0;
+  /* скидаємо body: 0.03em */
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Адаптивні правки */
+@media (max-width: 991.98px) {
+  .about-hero-v2 .hero-title {
+    top: 100px;
+    font-size: 64px;
+  }
+
+  .about-hero-v2 .hero-subtitle {
+    top: 160px;
+    font-size: 22px;
+  }
+
+  .about-hero-v2 .hero-text {
+    top: 210px;
+    font-size: 18px;
+    max-width: 86vw;
+  }
+}
+
+/* Блок з фото (для історії) */
+.story-image {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* Картка для філософії */
+.philosophy-card {
+  background-color: var(--k-white);
+  border-radius: 15px;
+  padding: 2rem;
+  height: 100%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.philosophy-card-icon {
+  font-size: 2.5rem;
+  color: var(--k-blue);
+  /* Іконки залишив синіми для акценту */
+  margin-bottom: 1rem;
+}
+
+/* Картка для інгредієнтів */
+.ingredient-card {
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  padding: 2rem;
+  height: 100%;
+}
+
+/* ================================================
+  ЗМІНА: Секція "Наша Команда"
+  ================================================
+*/
+.team-card {
+  border: none;
+  /* Прибрали фон, тінь та рамку */
+  background-color: transparent;
+  text-align: center;
+}
+
+.team-card img {
+  /* Зробили фото круглим */
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  /* Додаємо margin: auto, щоб центрувати, якщо колонка ширша */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-card-body {
+  /* Прибрали зайві відступи */
+  padding: 0;
+}
+
+/* Outline CTA — через змінні Bootstrap */
+.btn-outline-k {
+  --bs-btn-color: #000;
+  --bs-btn-border-color: #000;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #000;
+  --bs-btn-hover-border-color: #000;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #111;
+  --bs-btn-active-border-color: #111;
+  --bs-btn-border-width: 2px;
+  --bs-btn-border-radius: 12px;
+  --bs-btn-padding-y: .75rem;
+  --bs-btn-padding-x: 1.5rem;
+}
+
+/* Якщо Bootstrap підключений після style.css */
+.btn.btn-outline-k {
+  border-width: var(--bs-btn-border-width) !important;
+  border-color: var(--bs-btn-border-color) !important;
+  border-radius: var(--bs-btn-border-radius) !important;
 }
