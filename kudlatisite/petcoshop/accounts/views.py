@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
@@ -8,18 +8,25 @@ from .forms import RegisterUserForm
 from .models import UserRole, CustomerProfile, B2BProfile
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
+from .forms import B2BProfileForm
+from django.views.generic.edit import UpdateView
+from django.shortcuts import get_object_or_404
 
 class LogInView(LoginView):
     template_name = "accounts/sign_in.html"
     authentication_form = AuthenticationForm
 
     def get_success_url(self):
+        user = self.request.user
+        if user.role == UserRole.B2B:
+            return reverse_lazy('accounts:b2b_profile')
         return reverse_lazy('accounts:b2c_profile')
+
 
 class RegisterView(CreateView):
     form_class = RegisterUserForm
     template_name = "accounts/user_creation.html"
-    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
         print("✅ form_valid called!")
@@ -34,13 +41,37 @@ class RegisterView(CreateView):
         elif user.role == UserRole.B2B:
             B2BProfile.objects.create(user=user, company_name="Без назви", email=user.email)
 
+        # логінимо користувача
         login(self.request, user)
         messages.success(self.request, f"Вітаємо, {user.username}! Ваш акаунт створено.")
-        return super().form_valid(form)
+
+        # ДИНАМІЧНЕ ПЕРЕНАПРАВЛЕННЯ
+        if user.role == UserRole.B2B:
+            return redirect("accounts:b2b_profile")
+        else:
+            return redirect("accounts:b2c_profile")
 
     def form_invalid(self, form):
         print("❌ Form errors:", form.errors)
         return super().form_invalid(form)
 
+
 class ProfileView(TemplateView):
     template_name = "accounts/b2c_account.html"
+
+class B2BProfileView(LoginRequiredMixin, DetailView):
+    model = B2BProfile
+    template_name = "accounts/b2b_account.html"
+    context_object_name = "profile"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(B2BProfile, user=self.request.user)
+
+class EditB2BProfileView(LoginRequiredMixin, UpdateView):
+    model = B2BProfile
+    form_class = B2BProfileForm
+    template_name = "accounts/edit_b2b_profile.html"
+    success_url = reverse_lazy("accounts:b2b_profile")
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(B2BProfile, user=self.request.user)
