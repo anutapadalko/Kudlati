@@ -14,10 +14,8 @@ class UserRole(models.TextChoices):
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     role  = models.CharField(max_length=16, choices=UserRole.choices, default=UserRole.CUSTOMER)
-
     # Якщо хочете логінитися e-mail’ом (а не username), можна пізніше
     # перейти на AbstractBaseUser. Поки що зручніше залишити AbstractUser.
-
     def __str__(self) -> str:
         return self.username or self.email
 

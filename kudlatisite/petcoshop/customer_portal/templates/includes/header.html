@@ -14,7 +14,7 @@
       <div class="right-side d-flex align-items-center ms-2 gap-3">
         <div class="search-bar d-flex align-items-center bg-light rounded-4">
           <form id="search-form" class="flex-grow-1" action="#" method="get">
-            <input type="text" class="form-control border-0 bg-transparent" placeholder="{% trans 'Search products' %}" />
+            <input type="text" class="form-control border-0 bg-transparent" placeholder="{% trans 'SearchProducts' %}" />
           </form>
           <div class="ms-2 d-flex align-items-center" aria-label="{% trans 'Search' %}">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -24,7 +24,7 @@
         </div>
 
         <ul class="header-menu list-unstyled d-lg-flex align-items-center mb-0">
-          <li><a href="{% url 'customer_portal:about' %}" class="nav-link px-0 link-dark {% if request.path == '/about/' %} fw-semibold{% endif %}">{% trans "About Us" %}</a></li>
+          <li><a href="{% url 'customer_portal:about' %}" class="nav-link px-0 link-dark {% if request.path == '/about/' %} fw-semibold{% endif %}">{% trans "AboutUs" %}</a></li>
           <li><a href="{% url 'customer_portal:shop' %}" class="nav-link px-0 link-dark {% if request.path == '/shop/' %} fw-semibold{% endif %}">{% trans "Shop" %}</a></li>
           <li><a href="/sale/" class="nav-link px-0 link-dark {% if request.path == '/sale/' %} fw-semibold{% endif %}">{% trans "Sale" %}</a></li>
         </ul>
@@ -70,7 +70,6 @@
       </div>
     </div>
 
-    {# ===== Mobile header (окремий, лише < lg) ===== #}
     <div class="mobile-header d-flex d-lg-none align-items-center justify-content-between py-1 border-bottom">
       <!-- Лого -->
       <a href="/" class="d-inline-flex align-items-center">
@@ -93,6 +92,21 @@
           {% endwith %}
         </div>
       </div>
+<!-- 
+      <div class="language-buttons d-flex align-items-center">
+  <div class="lang-switch bg-light rounded-pill d-inline-flex align-items-center px-2 py-1">
+    <form method="post" action="{% url 'set_language' %}" class="m-0 d-inline">
+      {% csrf_token %}
+      {# важливо: get_full_path зберігає і ?page=, і інші параметри #}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <button type="submit" name="language" value="uk"
+              class="lang-btn {% if CURRENT_LANG|slice:':2' == 'uk' %}active{% endif %}">UA</button>
+      <span class="divider px-1">/</span>
+      <button type="submit" name="language" value="en"
+              class="lang-btn {% if CURRENT_LANG|slice:':2' == 'en' %}active{% endif %}">EN</button>
+    </form>
+  </div>
+</div> -->
 
       <!-- Кошик + бургер -->
       <div class="d-inline-flex align-items-center gap-2">

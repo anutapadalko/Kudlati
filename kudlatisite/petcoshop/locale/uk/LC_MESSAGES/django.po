@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-01 01:37+0200\n"
+"POT-Creation-Date: 2025-11-09 09:45+0200\n"
 "PO-Revision-Date: 2025-11-01 00:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -20,117 +20,17 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: .\customer_portal\templates\includes\footer.html:27
-#: .\customer_portal\templates\includes\header.html:12
-#: .\customer_portal\templates\main\about.html:7
-msgid "About Us"
+msgid "SearchProducts"
+msgstr "Знайти продукт"
+
+msgid "AboutUs"
 msgstr "Про нас"
 
-#: .\customer_portal\templates\includes\footer.html:30
-#: .\customer_portal\templates\includes\header.html:13
 msgid "Shop"
 msgstr "Магазин"
 
-#: .\customer_portal\templates\includes\footer.html:33
-#: .\customer_portal\templates\includes\header.html:14
 msgid "Sale"
 msgstr "Знижки"
 
-#: .\customer_portal\templates\includes\footer.html:41
-msgid "Cooperate with us"
-msgstr "Співпрацюйте з нами"
-
-#: .\customer_portal\templates\header.html:22
-msgid "Search products"
-msgstr "Пошук товарів"
-
-#: .\customer_portal\templates\header.html:24
-msgid "Search"
-msgstr "Пошук"
-
-#: .\customer_portal\templates\header.html:36
-msgid "Language"
-msgstr "Мова"
-
-#: .\customer_portal\templates\header.html:54
-msgid "Account"
-msgstr "Обліковий запис"
-
-#: .\customer_portal\templates\header.html:59
-msgid "Wishlist"
-msgstr "Обране"
-
-#: .\customer_portal\templates\header.html:68
-msgid "Cart"
-msgstr "Кошик"
-
-#: .\customer_portal\templates\main\about.html:8
-msgid "Information about our shop will be here."
-msgstr "Інформація про наш магазин буде тут."
-
-#: .\customer_portal\templates\main\categories.html:9
 msgid "Category"
-msgstr "Категорії"
-
-#: .\customer_portal\templates\main\categories.html:12
-msgid "View All Categories →"
-msgstr "Переглянути всі категорії →"
-
-#: .\customer_portal\templates\main\categories.html:28
-#: .\customer_portal\templates\main\categories.html:32
-#: .\customer_portal\templates\main\categories.html:36
-#: .\customer_portal\templates\main\categories.html:40
-#: .\customer_portal\templates\main\categories.html:44
-#: .\customer_portal\templates\main\categories.html:48
-#: .\customer_portal\templates\main\categories.html:52
-#: .\customer_portal\templates\main\categories.html:56
-#: .\customer_portal\templates\main\categories.html:60
-#: .\customer_portal\templates\main\categories.html:64
-msgid "Category Thumbnail"
-msgstr "Мініатюра категорії"
-
-#: .\customer_portal\templates\main\categories.html:29
-#: .\customer_portal\templates\main\categories.html:37
-#: .\customer_portal\templates\main\categories.html:41
-#: .\customer_portal\templates\main\categories.html:45
-#: .\customer_portal\templates\main\categories.html:49
-#: .\customer_portal\templates\main\categories.html:53
-#: .\customer_portal\templates\main\categories.html:57
-#: .\customer_portal\templates\main\categories.html:61
-#: .\customer_portal\templates\main\categories.html:65
-msgid "Fruits & Veges"
-msgstr "Фрукти та овочі"
-
-#: .\customer_portal\templates\main\categories.html:33
-msgid "Breads & Sweets"
-msgstr "Хліб та солодощі"
-
-msgid "100% natural"
-msgstr "100% натурально"
-
-msgid "Fresh Smoothie & Summer Juice"
-msgstr "Свіжі смузі та літні соки"
-
-msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum."
-msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum."
-
-msgid "Shop Now"
-msgstr "Купити зараз"
-
-msgid "Shop Collection"
-msgstr "Дивитися колекцію"
-
-msgid "Fruits & Vegetables"
-msgstr "Фрукти та овочі"
-
-msgid "Baked Products"
-msgstr "Хлібобулочні вироби"
-
-msgid "20% Off"
-msgstr "Знижка 20%"
-
-msgid "15% Off"
-msgstr "Знижка 15%"
-
-msgid "Heinz Tomato Ketchup"
-msgstr "Heinz Tomato Ketchup"
+msgstr "Категорія"

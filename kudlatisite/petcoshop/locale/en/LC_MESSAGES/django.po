@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-01 01:01+0200\n"
+"POT-Creation-Date: 2025-11-09 09:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,42 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\customer_portal\templates\includes\header.html:12
-msgid "About Us"
-msgstr ""
 
-#: .\customer_portal\templates\includes\header.html:13
+msgid "SearchProducts"
+msgstr "Search products"
+
+msgid "AboutUs"
+msgstr "About Us"
+
 msgid "Shop"
-msgstr ""
+msgstr "Shop"
 
-#: .\customer_portal\templates\includes\header.html:14
 msgid "Sale"
-msgstr ""
+msgstr "Sale"
 
-#: .\customer_portal\templates\includes\header.html:22
-msgid "Search products"
-msgstr ""
-
-#: .\customer_portal\templates\includes\header.html:24
-msgid "Search"
-msgstr ""
-
-#: .\customer_portal\templates\includes\header.html:36
-msgid "Language"
-msgstr ""
-
-#: .\customer_portal\templates\includes\header.html:54
-msgid "Account"
-msgstr ""
-
-#: .\customer_portal\templates\includes\header.html:59
-msgid "Wishlist"
-msgstr ""
-
-#: .\customer_portal\templates\includes\header.html:68
-msgid "Cart"
-msgstr ""
-
-#: .\customer_portal\templates\main\about.html:8
-msgid "Information about our shop will be here."
-msgstr ""
+msgid "Category"
+msgstr "Category"

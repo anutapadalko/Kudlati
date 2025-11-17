@@ -56,8 +56,13 @@ class RegisterView(CreateView):
         return super().form_invalid(form)
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, DetailView):
     template_name = "accounts/b2c_account.html"
+    model = CustomerProfile
+    context_object_name = "profile"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(CustomerProfile, user=self.request.user)
 
 class B2BProfileView(LoginRequiredMixin, DetailView):
     model = B2BProfile

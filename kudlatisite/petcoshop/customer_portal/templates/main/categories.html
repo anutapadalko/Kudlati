@@ -9,7 +9,11 @@
           <h2 class="section-title">{% trans "Category" %}</h2>
 
           <div class="d-flex align-items-center">
-            <a href="#" class="btn-link text-decoration-none">{% trans "View All Categories →" %}</a>
+            {% if categories %}
+              <a href="{% url 'catalog:category' slug=categories.0.slug %}" class="btn-link text-decoration-none">
+                {% trans "View All Categories →" %}
+              </a>
+            {% endif %}
             <div class="swiper-buttons">
               <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
               <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
@@ -24,46 +28,20 @@
 
         <div class="category-carousel swiper">
           <div class="swiper-wrapper">
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-bread-baguette.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Breads & Sweets" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-soft-drinks-bottle.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-wine-glass-bottle.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-animal-products-drumsticks.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-bread-herb-flour.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
-            <a href="index.html" class="nav-link category-item swiper-slide">
-              <img src="{% static 'images/icon-vegetables-broccoli.png' %}" alt="{% trans 'Category Thumbnail' %}">
-              <h3 class="category-title">{% trans "Fruits & Veges" %}</h3>
-            </a>
+
+            {% for c in categories %}
+              <a href="{% url 'catalog:category' slug=c.slug %}" class="nav-link category-item swiper-slide">
+                <div class="category-icon" aria-hidden="true">
+                  {% if c.icon %}
+                    <img src="{{ c.icon.url }}" alt="{{ c.name }}" loading="lazy" decoding="async" width="96" height="96">
+                  {% else %}
+                    <img src="{% static 'images/icon-placeholder.png' %}" alt="{{ c.name }}" loading="lazy" decoding="async" width="96" height="96">
+                  {% endif %}
+                </div>
+                <h3 class="category-title">{{ c.name }}</h3>
+              </a>
+            {% endfor %}
+
 
           </div>
         </div>
