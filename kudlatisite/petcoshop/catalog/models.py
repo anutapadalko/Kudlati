@@ -6,12 +6,14 @@ from parler.models import TranslatableModel, TranslatedFields
 
 # ====== ДОВІДНИКИ, ЯКИМИ МЕНЕДЖИШ ЧЕРЕЗ АДМІНКУ ======
 
+
 class Category(TranslatableModel):
     translations = TranslatedFields(
-        name = models.CharField(_("Назва категорії"), max_length=120),
+        name=models.CharField(_("Назва категорії"), max_length=120),
     )
     slug = models.SlugField(_("Слаг"), max_length=140, unique=True)
-    icon = models.ImageField(_("Іконка"), upload_to="categories/icons/", blank=True, null=True)
+    icon = models.ImageField(
+        _("Іконка"), upload_to="categories/icons/", blank=True, null=True)
     is_active = models.BooleanField(_("Активна"), default=True)
     sort_order = models.PositiveIntegerField(_("Порядок"), default=0)
 
@@ -30,9 +32,11 @@ class Category(TranslatableModel):
         self._ensure_all_translations(["name"])
 
     def _ensure_all_translations(self, fields):
-        langs = [code for code, _ in getattr(settings, "LANGUAGES", [("uk","Ukrainian")])]
+        langs = [code for code, _ in getattr(
+            settings, "LANGUAGES", [("uk", "Ukrainian")])]
         base_lang = getattr(settings, "LANGUAGE_CODE", "uk")
-        base_val = {f: self.safe_translation_getter(f, language_code=base_lang) for f in fields}
+        base_val = {f: self.safe_translation_getter(
+            f, language_code=base_lang) for f in fields}
         for code in langs:
             if not self.has_translation(code):
                 self.set_current_language(code)
@@ -48,10 +52,11 @@ class ProductType(TranslatableModel):
     то у продуктів цього типу coat_type стане обовʼязковим.
     """
     translations = TranslatedFields(
-        name = models.CharField(_("Назва типу продукту"), max_length=120),
+        name=models.CharField(_("Назва типу продукту"), max_length=120),
     )
     slug = models.SlugField(_("Слаг"), max_length=140, unique=True)
-    requires_coat_type = models.BooleanField(_("Потрібен тип шерсті?"), default=False)
+    requires_coat_type = models.BooleanField(
+        _("Потрібен тип шерсті?"), default=False)
     is_active = models.BooleanField(_("Активний"), default=True)
     sort_order = models.PositiveIntegerField(_("Порядок"), default=0)
 
@@ -68,9 +73,11 @@ class ProductType(TranslatableModel):
         self._ensure_all_translations(["name"])
 
     def _ensure_all_translations(self, fields):
-        langs = [code for code, _ in getattr(settings, "LANGUAGES", [("uk","Ukrainian")])]
+        langs = [code for code, _ in getattr(
+            settings, "LANGUAGES", [("uk", "Ukrainian")])]
         base_lang = getattr(settings, "LANGUAGE_CODE", "uk")
-        base_val = {f: self.safe_translation_getter(f, language_code=base_lang) for f in fields}
+        base_val = {f: self.safe_translation_getter(
+            f, language_code=base_lang) for f in fields}
         for code in langs:
             if not self.has_translation(code):
                 self.set_current_language(code)
@@ -84,7 +91,7 @@ class CoatType(TranslatableModel):
     Напр.: гладкошерсті / кудлаті / чутливі. Адмін може додавати свої.
     """
     translations = TranslatedFields(
-        name = models.CharField(_("Тип шерсті"), max_length=120),
+        name=models.CharField(_("Тип шерсті"), max_length=120),
     )
     is_active = models.BooleanField(_("Активний"), default=True)
     sort_order = models.PositiveIntegerField(_("Порядок"), default=0)
@@ -102,9 +109,11 @@ class CoatType(TranslatableModel):
         self._ensure_all_translations(["name"])
 
     def _ensure_all_translations(self, fields):
-        langs = [code for code, _ in getattr(settings, "LANGUAGES", [("uk","Ukrainian")])]
+        langs = [code for code, _ in getattr(
+            settings, "LANGUAGES", [("uk", "Ukrainian")])]
         base_lang = getattr(settings, "LANGUAGE_CODE", "uk")
-        base_val = {f: self.safe_translation_getter(f, language_code=base_lang) for f in fields}
+        base_val = {f: self.safe_translation_getter(
+            f, language_code=base_lang) for f in fields}
         for code in langs:
             if not self.has_translation(code):
                 self.set_current_language(code)
@@ -114,10 +123,11 @@ class CoatType(TranslatableModel):
 
 # ====== ПРОДУКТ ТА ЗОБРАЖЕННЯ ======
 
+
 class Product(TranslatableModel):
     translations = TranslatedFields(
-        name = models.CharField(_("Назва"), max_length=255),
-        description = models.TextField(_("Опис"), blank=True),
+        name=models.CharField(_("Назва"), max_length=255),
+        description=models.TextField(_("Опис"), blank=True),
     )
 
     category = models.ForeignKey(
@@ -135,16 +145,33 @@ class Product(TranslatableModel):
     volume_ml = models.PositiveIntegerField(_("Об’єм, мл"))
 
     price = models.DecimalField(_("Ціна"), max_digits=10, decimal_places=2)
-    cost_price = models.DecimalField(_("Собівартість"), max_digits=10, decimal_places=2)
+    cost_price = models.DecimalField(
+        _("Собівартість"), max_digits=10, decimal_places=2)
 
     stock_qty = models.PositiveIntegerField(_("Залишки на складі"), default=0)
 
     batch_code = models.CharField(_("Партія"), max_length=64, blank=True)
-    expiry_date = models.DateField(_("Термін придатності"), blank=True, null=True)
+    expiry_date = models.DateField(
+        _("Термін придатності"), blank=True, null=True)
 
     is_active = models.BooleanField(_("Активний"), default=True)
     created_at = models.DateTimeField(_("Створено"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Оновлено"), auto_now=True)
+
+    # Метод для отримання відсотка активної знижки
+    def get_discount_percent(self):
+        # Шукаємо активну акцію, прив'язану до цього товару
+        promo = self.promotions.filter(is_active=True).first()
+        return promo.discount_percent if promo else 0
+
+    # Метод для розрахунку нової ціни
+    def get_sale_price(self):
+        percent = self.get_discount_percent()
+        if percent > 0:
+            # Вираховуємо знижку: Ціна - (Ціна * Відсоток / 100)
+            discount_amount = (self.price * percent) / 100
+            return self.price - discount_amount
+        return self.price
 
     class Meta:
         verbose_name = _("Продукт")
@@ -158,16 +185,19 @@ class Product(TranslatableModel):
     def clean(self):
         # coat_type обовʼязковий, якщо product_type.requires_coat_type=True
         if self.product_type and self.product_type.requires_coat_type and not self.coat_type:
-            raise ValidationError({"coat_type": _("Для цього типу продукту потрібно обрати тип шерсті.")})
+            raise ValidationError(
+                {"coat_type": _("Для цього типу продукту потрібно обрати тип шерсті.")})
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self._ensure_all_translations(["name", "description"])
 
     def _ensure_all_translations(self, fields):
-        langs = [code for code, _ in getattr(settings, "LANGUAGES", [("uk","Ukrainian")])]
+        langs = [code for code, _ in getattr(
+            settings, "LANGUAGES", [("uk", "Ukrainian")])]
         base_lang = getattr(settings, "LANGUAGE_CODE", "uk")
-        base_val = {f: self.safe_translation_getter(f, language_code=base_lang) for f in fields}
+        base_val = {f: self.safe_translation_getter(
+            f, language_code=base_lang) for f in fields}
         for code in langs:
             if not self.has_translation(code):
                 self.set_current_language(code)
@@ -182,10 +212,11 @@ class ProductImage(TranslatableModel):
     )
     image = models.ImageField(_("Зображення"), upload_to="products/%Y/%m/")
     translations = TranslatedFields(
-        alt = models.CharField(_("ALT текст"), max_length=255, blank=True),
+        alt=models.CharField(_("ALT текст"), max_length=255, blank=True),
     )
     sort_order = models.PositiveIntegerField(_("Порядок"), default=0)
-    is_main = models.BooleanField(_("Головне"), default=False, help_text=_("Головне зображення"))
+    is_main = models.BooleanField(
+        _("Головне"), default=False, help_text=_("Головне зображення"))
 
     class Meta:
         verbose_name = _("Зображення продукту")
@@ -200,9 +231,11 @@ class ProductImage(TranslatableModel):
         self._ensure_all_translations(["alt"])
 
     def _ensure_all_translations(self, fields):
-        langs = [code for code, _ in getattr(settings, "LANGUAGES", [("uk","Ukrainian")])]
+        langs = [code for code, _ in getattr(
+            settings, "LANGUAGES", [("uk", "Ukrainian")])]
         base_lang = getattr(settings, "LANGUAGE_CODE", "uk")
-        base_val = {f: self.safe_translation_getter(f, language_code=base_lang) for f in fields}
+        base_val = {f: self.safe_translation_getter(
+            f, language_code=base_lang) for f in fields}
         for code in langs:
             if not self.has_translation(code):
                 self.set_current_language(code)

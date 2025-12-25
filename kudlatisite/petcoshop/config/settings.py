@@ -29,14 +29,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "jazzmin", 
+    "jazzmin",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     "parler",
     "accounts",
     "catalog",
@@ -84,14 +84,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-     "default": {
-         "ENGINE": "django.db.backends.postgresql",
-         "NAME": "kudlatiDb",
-         "USER": "postgres",
-         "PASSWORD": "Qwerty123!@#",
-         "HOST": "localhost",
-         "PORT": "5432",
-     }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "kudlatiDb",
+        "USER": "postgres",
+        "PASSWORD": "unicorn1",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
 }
 
 # Password validation
@@ -122,8 +122,8 @@ LANGUAGES = [('uk', 'Українська'), ('en', 'English')]
 LOCALE_PATHS = [BASE_DIR / 'locale']
 LANGUAGE_COOKIE_NAME = 'django_language'  # опційно
 PARLER_LANGUAGES = {
-    None: ({"code":"uk"}, {"code":"en"}),
-    "default": {"fallbacks":["uk", "en"], "hide_untranslated": False},
+    None: ({"code": "uk"}, {"code": "en"}),
+    "default": {"fallbacks": ["uk", "en"], "hide_untranslated": False},
 }
 
 USE_TZ = True
@@ -150,4 +150,3 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Вітаємо у бек-офісі Kudlati",
     "show_ui_builder": True,
 }
-
