@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block content %}
+
+<section class="about-hero-v2" style="background-image: url('{% static 'images/brandkit-hero.jpg' %}');">
+  <div class="hero-inner">
+    <h1 class="hero-title">Kudlati</h1>
+    <p class="hero-subtitle">– {% trans "любов до собак у кожному продукті" %}</p>
+    <p class="hero-text">
+      {% trans "Ми створюємо якісну косметику для догляду за вашими улюбленцями, яка поєднує безпеку, ефективність та турботу." %}
+    </p>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <img src="{% static 'images/poodle_story.jpg' %}" class="story-image" alt="{% trans 'Наш натхненник Пом' %}">
+      </div>
+      <div class="col-lg-6 ps-lg-5">
+        <h2 class="k-font-medium">{% trans "Наша історія починається з Пома" %}</h2>
+        <p class="lead text-muted">{% trans "Все почалось із нього – першого песика власниці бренду." %}</p>
+        <p>{% trans "Коли він з'явився, ми зіткнулись з проблемою вибору якісної косметики. Пом був схильним до алергічних реакцій, а його чутлива шкіра потребувала особливого догляду." %}</p>
+        <p>{% trans "Мити його гелевими шампунями було незручно: мочалки погано пінили засоби, а часу на розбавляння шампуню не завжди вистачало. Його чутлива шкіра допомогла нам зрозуміти, що саме потрібно тваринам для комфортного та здорового життя." %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 pe-lg-5 mb-4 mb-lg-0">
+        <h2 class="k-font-medium">{% trans "Відповідь, заснована на досвіді" %}</h2>
+        <p class="lead text-muted">{% trans "Маючи за плечима семирічний досвід роботи хіміком та знання у косметології, засновниця бренду вирішила діяти." %}</p>
+        <p>{% trans "Разом з групою хіміків-технологів вона створила власну лінійку зоокосметики, що відповідає найвищим стандартам якості. Ми працювали над трьома шампунями майже півроку, тестуючи концентрації та компоненти, шукаючи ту саму ідеальну формулу." %}</p>
+        <p>{% trans "Принциповим рішенням став комфорт використання. Легка текстура пінки робить догляд швидким та ефективним навіть для тварин з чутливою шкірою." %}</p>
+      </div>
+      <div class="col-lg-6">
+        <img src="{% static 'images/founder_slava.jpg' %}" class="story-image" alt="{% trans 'Засновниця Kudlati' %}">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="k-font-medium">{% trans "Філософія нашого бренду" %}</h2>
+      <p class="lead text-muted">{% trans "Що робить наш підхід особливим." %}</p>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="philosophy-card">
+          <div class="philosophy-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-flask" viewBox="0 0 16 16">
+              <path d="M4.5 1.825A.5.5 0 0 1 5 1.5h6a.5.5 0 0 1 .5.5v3.204a2.5 2.5 0 0 1 .14.31.5.5 0 0 1-.14.69l-2.35 1.958a.5.5 0 0 1-.36.13H8a.5.5 0 0 1-.36-.13L5.29 7.528a.5.5 0 0 1-.14-.69.25.25 0 0 1 .14-.31V1.825zM5 1v3.668a1.5 1.5 0 0 0-.12.247l-2.35 1.958a1.5 1.5 0 0 0-.53 1.054V14.5a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5V8.427a1.5 1.5 0 0 0-.53-1.054L11.12 5.415A1.5 1.5 0 0 0 11 4.668V1H5z"/>
+            </svg>
+          </div>
+          <h4 class="k-font-medium">{% trans "Науковий підхід" %}</h4>
+          <p class="text-muted">{% trans "Натуральний веганський склад, що є необхідністю для улюбленців. Без сульфатів, парабенів, барвників і шкідливих хімічних речовин. Вся косметика має збалансований pH, комфортний для собак та котів." %}</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="philosophy-card">
+          <div class="philosophy-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>
+          </div>
+          <h4 class="k-font-medium">{% trans "Чесність та Екологічність" %}</h4>
+          <p class="text-muted">{% trans "Наші баночки прозорі. Це дозволяє бачити натуральні кольори і бути впевненим у відсутності згущувачів чи перламутру. Ви завжди бачите залишок, а самі баночки (PET 1) можна здати на переробку." %}</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="philosophy-card">
+          <div class="philosophy-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-magic" viewBox="0 0 16 16">
+              <path d="M9.5 2.672a.5.5 0 1 0 1 0V.843a.5.5 0 0 0-1 0v1.829Zm4.5.035A.5.5 0 0 0 13.293 2L12 3.293a.5.5 0 1 0 .707.707L14 3.035a.5.5 0 0 0 .035-.707ZM-1 10a.5.5 0 0 1 .5-.5h1.829a.5.5 0 1 1 0 1H-.5a.5.5 0 0 1-.5-.5ZM11 11.293a.5.5 0 1 0-.707.707L11.586 13H11a.5.5 0 0 0 0 1h1.293l-1.086 1.086a.5.5 0 1 0 .707.707L13.707 14h.035a.5.5 0 0 0 .354-.854l-2.8-2.8ZM1.732 3.732a.5.5 0 1 1 .707-.707l.035.035A.5.5 0 0 1 2 3.707l-.035.035a.5.5 0 0 1-.707 0L1 2.707A.5.5 0 0 1 1.732 2l.035.035a.5.5 0 0 1 0 .707L1 3.707a.5.5 0 0 1-.035.035Z"/>
+              <path d="m13.28.72 1 1a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 0-.708l7-7a.5.5 0 0 1 .708 0ZM13 2.207 6.5 8.707 5.793 8 12.293 1.5 13 2.207Z"/>
+            </svg>
+          </div>
+          <h4 class="k-font-medium">{% trans "Комфорт та Аромат" %}</h4>
+          <p class="text-muted">{% trans "Концентрацію ароматів підбирали окремо, щоб песикам було комфортно, аромат не тримався надто довго, але господарю було приємно. А ще шампунь-пінка дуже економний: 5% баночки пішло на одне купання лабрадудля!" %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="k-font-medium">{% trans "Супергерої у складі" %}</h2>
+      <p class="lead text-muted">{% trans "Важливі інгредієнти наших шампунів-пінок: ніацинамід та інулін." %}</p>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="ingredient-card">
+          <h3 class="k-font-medium">{% trans "Ніацинамід (Вітамін B3)" %}</h3>
+          <p>{% trans "Це супергерой для шкіри та шерсті, який глибоко зволожує шкіру та зміцнює її захисний бар'єр." %}</p>
+          <ul>
+            <li>{% trans "Заспокоює подразнення" %}</li>
+            <li>{% trans "Робить шерсть міцною та блискучою" %}</li>
+            <li>{% trans "Утримує вологу та захищає шкіру" %}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6 mb-4">
+        <div class="ingredient-card">
+          <h3 class="k-font-medium">{% trans "Інулін (Пребіотик)" %}</h3>
+          <p>{% trans "Це натуральний пребіотик, який підтримує здоровий баланс мікрофлори шкіри та захищає від негативного впливу середовища." %}</p>
+          <ul>
+            <li>{% trans "Підтримує здоровий мікробаланс" %}</li>
+            <li>{% trans "Зволожує шкіру та шерсть" %}</li>
+            <li>{% trans "Нейтралізує неприємні запахи" %}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <p class="lead k-font-medium">{% trans "Разом ніацинамід та інулін роблять шерсть здоровою та сяючою, захищають шкіру та ідеально підходять для чутливих песиків." %}</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="k-font-medium">{% trans "Наша Команда" %}</h2>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card team-card">
+          <img src="{% static 'images/founder_slava.jpg' %}" alt="{% trans 'Slava Mlnchk, Засновниця' %}">
+          <div class="card-body team-card-body">
+            <h5 class="card-title k-font-medium">{% trans "Slava Mlnchk" %}</h5>
+            <p class="card-text text-muted">{% trans "Засновниця / Хімік" %}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card team-card">
+          <img src="{% static 'images/pom_pom_tester.jpg' %}" alt="{% trans 'Пом Пом, головний тестувальник' %}">
+          <div class="card-body team-card-body">
+            <h5 class="card-title k-font-medium">{% trans "Пом Пом" %}</h5>
+            <p class="card-text text-muted">{% trans "Головний тестувальник та натхненник" %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 k-bg-pink">
+  <div class="container text-center">
+    <h2 class="k-font-medium">{% trans "Готові спробувати?" %}</h2>
+    <p class="lead mb-4">{% trans "Оберіть найкращий догляд для вашого кудлатого друга." %}</p>
+    <a href="{% url 'customer_portal:shop' %}" class="btn btn-outline-k btn-lg k-font-medium">{% trans "До магазину" %}</a>
+  </div>
+</section>
+
+{% endblock %}
