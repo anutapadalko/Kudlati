@@ -1,16 +1,23 @@
 from django.contrib import admin
 from .models import Order, OrderToProduct
 
+# Цей клас дозволяє бачити товари прямо на сторінці замовлення
+
 
 class OrderItemInline(admin.TabularInline):
     model = OrderToProduct
-    extra = 0
+    # Щоб не вантажити випадаючий список, якщо товарів багато
+    raw_id_fields = ['product']
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'status', 'is_paid',
-                    'created_at', 'lmd']  # Бачимо LMD в списку
+    # Які колонки показувати у списку всіх замовлень
+    list_display = ['id', 'user', 'first_name', 'last_name',
+                    'phone', 'status', 'is_paid', 'created_at']
+
+    # Фільтри збоку (дуже зручно)
     list_filter = ['status', 'is_paid', 'created_at']
-    # Дозволяє бачити товари прямо всередині замовлення
+
+    # Головна магія: підключаємо товари всередину
     inlines = [OrderItemInline]

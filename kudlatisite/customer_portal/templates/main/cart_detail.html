@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends "main.html" %}
 {% load static %}
 
 {% block content %}
@@ -42,8 +42,8 @@
     </table>
 
     <div class="text-right">
-        <a href="{% url 'customer_portal:sale' %}" class="btn btn-secondary">Продовжити покупки</a>
-        <a href="#" class="btn btn-success">Оформити замовлення</a>
+        <a href="{% url 'customer_portal:shop' %}" class="btn btn-secondary">Продовжити покупки</a>
+        <a href="{% url 'orders:order_create' %}" class="btn btn-success">Оформити замовлення</a>
     </div>
 </div>
 {% endblock %}

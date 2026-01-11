@@ -3,6 +3,8 @@ from django.views.decorators.http import require_POST
 from catalog.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from .models import OrderToProduct
+from .forms import OrderCreateForm
 
 
 @require_POST
@@ -42,3 +44,49 @@ def cart_detail(request):
         })
 
     return render(request, 'main/cart_detail.html', {'cart': cart})
+
+
+def order_create(request):
+    cart = Cart(request)
+    if request.method == 'POST':
+        # Якщо користувач відправив форму
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            # 1. Створюємо замовлення, але поки не зберігаємо в БД
+            order = form.save(commit=False)
+
+            # 2. Якщо користувач залогінений, прив'язуємо замовлення до нього
+            if request.user.is_authenticated:
+                order.user = request.user
+
+            # 3. Тепер зберігаємо замовлення (щоб отримати ID)
+            order.save()
+
+            # 4. Переносимо товари з кошика в базу даних (OrderToProduct)
+            for item in cart:
+                OrderToProduct.objects.create(
+                    order=order,
+                    product=item['product'],
+                    price=item['price'],
+                    quantity=item['quantity']
+                )
+
+            # 5. Очищаємо кошик
+            cart.clear()
+
+            # 6. Показуємо сторінку успіху (створимо її пізніше)
+            return render(request, 'main/order_success.html', {'order': order})
+
+    else:
+        # Якщо GET-запит (користувач просто зайшов на сторінку)
+        # Якщо він залогінений, пробуємо підставити його дані
+        initial_data = {}
+        if request.user.is_authenticated:
+            initial_data = {
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                # 'email': request.user.email, # Якщо в Order є email
+            }
+        form = OrderCreateForm(initial=initial_data)
+
+    return render(request, 'main/checkout.html', {'cart': cart, 'form': form})
