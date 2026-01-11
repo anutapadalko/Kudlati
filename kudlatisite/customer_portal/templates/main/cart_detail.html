@@ -1,0 +1,49 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Ваш кошик</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Разом</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                <tr>
+                    <td>{{ product.sku }}</td> <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }} ₴</td>
+                    <td>{{ item.total_price }} ₴</td>
+                    <td>
+                        <form action="{% url 'orders:cart_remove' product.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Видалити" class="btn btn-danger btn-sm">
+                        </form>
+                    </td>
+                </tr>
+                {% endwith %}
+            {% endfor %}
+            
+            <tr style="background-color: #f8f9fa; font-weight: bold;">
+                <td>Всього</td>
+                <td colspan="2"></td>
+                <td>{{ cart.get_total_price }} ₴</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a href="{% url 'customer_portal:sale' %}" class="btn btn-secondary">Продовжити покупки</a>
+        <a href="#" class="btn btn-success">Оформити замовлення</a>
+    </div>
+</div>
+{% endblock %}
