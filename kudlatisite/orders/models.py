@@ -48,6 +48,22 @@ class Order(models.Model):
     def __str__(self):
         return f"Order {self.id} - {self.status}"
 
+    PAYMENT_METHODS = [
+        ('cash', 'Накладений платіж (Оплата при отриманні)'),
+        ('card', 'Оплата карткою (LiqPay)'),
+    ]
+
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHODS,
+        default='cash',
+        verbose_name='Спосіб оплати'
+    )
+
+    def get_total_cost(self):
+        # Рахуємо суму: ціна * кількість для кожного товару в замовленні
+        return sum(item.price * item.quantity for item in self.items.all())
+
 
 class OrderToProduct(models.Model):
     # Проміжна таблиця OrdrToProducts

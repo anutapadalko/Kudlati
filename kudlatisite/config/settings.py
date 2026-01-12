@@ -149,3 +149,7 @@ JAZZMIN_SETTINGS = {
 }
 
 CART_SESSION_ID = 'cart'
+
+# LiqPay Settings
+LIQPAY_PUBLIC_KEY = 'sandbox_i95837243847'
+LIQPAY_PRIVATE_KEY = 'sandbox_4IcGexc3BuJs9ikskAQzLLm9Ol6XasJcQVUE3z5D'

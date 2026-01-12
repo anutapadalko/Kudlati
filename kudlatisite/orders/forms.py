@@ -19,12 +19,17 @@ class CartAddProductForm(forms.Form):
 class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'phone', 'address', 'comment']
-        # Ми не додаємо сюди status, is_paid чи user, бо це заповнюється автоматично
+        # Додаємо 'payment_method' у список полів
+        fields = ['first_name', 'last_name', 'phone',
+                  'address', 'payment_method', 'comment']
+
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваше ім\'я'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ваше прізвище'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+380...'}),
-            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Місто, вулиця, відділення пошти'}),
-            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Коментар до замовлення (необов\'язково)'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ваше ім'я"}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ваше прізвище"}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "+380..."}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Місто, відділення НП"}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+
+            # Робимо красиві перемикачі (Radio Buttons)
+            'payment_method': forms.RadioSelect(attrs={'class': 'form-check-input'}),
         }

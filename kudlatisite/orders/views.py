@@ -1,10 +1,14 @@
+from django.shortcuts import render, redirect  # Переконайся, що є redirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from catalog.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
-from .models import OrderToProduct
+from .models import Order, OrderToProduct
 from .forms import OrderCreateForm
+from django.conf import settings
+from .liqpay_internal import LiqPay
+from django.views.generic import TemplateView  # Це для сторінки оплати
 
 
 @require_POST
@@ -49,20 +53,13 @@ def cart_detail(request):
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
-        # Якщо користувач відправив форму
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            # 1. Створюємо замовлення, але поки не зберігаємо в БД
             order = form.save(commit=False)
-
-            # 2. Якщо користувач залогінений, прив'язуємо замовлення до нього
             if request.user.is_authenticated:
                 order.user = request.user
-
-            # 3. Тепер зберігаємо замовлення (щоб отримати ID)
             order.save()
 
-            # 4. Переносимо товари з кошика в базу даних (OrderToProduct)
             for item in cart:
                 OrderToProduct.objects.create(
                     order=order,
@@ -70,23 +67,65 @@ def order_create(request):
                     price=item['price'],
                     quantity=item['quantity']
                 )
-
-            # 5. Очищаємо кошик
             cart.clear()
 
-            # 6. Показуємо сторінку успіху (створимо її пізніше)
-            return render(request, 'main/order_success.html', {'order': order})
+            # --- НОВА ЛОГІКА ---
+
+            # 1. Якщо обрали LiqPay -> перекидаємо на сторінку оплати
+            if order.payment_method == 'card':
+                return redirect('orders:order_pay', order_id=order.id)
+
+            # 2. Якщо обрали Готівку -> відразу дякуємо
+            else:
+                return render(request, 'main/order_success.html', {'order': order})
+
+            # -------------------
 
     else:
-        # Якщо GET-запит (користувач просто зайшов на сторінку)
-        # Якщо він залогінений, пробуємо підставити його дані
+        # ... твій код для GET запиту ...
         initial_data = {}
         if request.user.is_authenticated:
             initial_data = {
                 'first_name': request.user.first_name,
                 'last_name': request.user.last_name,
-                # 'email': request.user.email, # Якщо в Order є email
             }
         form = OrderCreateForm(initial=initial_data)
 
     return render(request, 'main/checkout.html', {'cart': cart, 'form': form})
+
+
+def order_pay(request, order_id):
+    order = Order.objects.get(id=order_id)
+
+    # Ініціалізуємо LiqPay
+    liqpay = LiqPay(settings.LIQPAY_PUBLIC_KEY, settings.LIQPAY_PRIVATE_KEY)
+
+    # Формуємо параметри для кнопки
+    params = {
+        'action': 'pay',
+        'amount': str(order.get_total_cost()),  # Загальна сума
+        'currency': 'UAH',
+        'description': f'Оплата замовлення №{order.id}',
+        'order_id': str(order.id),
+        'version': '3',
+        'sandbox': 1,  # 1 - це тестовий режим (гроші не списуються)
+        'server_url': 'http://.../pay-callback/',  # Поки що заглушка
+        # Куди повернути клієнта після оплати
+        'result_url': 'http://127.0.0.1:8000/cart/success/{}'.format(order.id),
+    }
+
+    # Генеруємо HTML-форму (кнопку)
+    signature = liqpay.cnb_signature(params)
+    data = liqpay.cnb_data(params)
+
+    return render(request, 'main/pay.html', {'signature': signature, 'data': data})
+
+
+def payment_success(request, order_id):
+    order = Order.objects.get(id=order_id)
+
+    # Позначаємо в базі, що гроші прийшли
+    order.is_paid = True
+    order.save()
+
+    return render(request, 'main/order_success.html', {'order': order})
