@@ -10,4 +10,5 @@ urlpatterns = [
     path('create/', views.order_create, name='order_create'),
     path('pay/<int:order_id>/', views.order_pay, name='order_pay'),
     path('success/<int:order_id>/', views.payment_success, name='payment_success'),
+    path('callback/', views.pay_callback, name='pay_callback'),
 ]

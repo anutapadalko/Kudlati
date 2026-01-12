@@ -9,6 +9,11 @@ from .forms import OrderCreateForm
 from django.conf import settings
 from .liqpay_internal import LiqPay
 from django.views.generic import TemplateView  # Це для сторінки оплати
+import json
+import base64
+# Дозволяє банку стукати без токена безпеки
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 
 @require_POST
@@ -109,7 +114,8 @@ def order_pay(request, order_id):
         'order_id': str(order.id),
         'version': '3',
         'sandbox': 1,  # 1 - це тестовий режим (гроші не списуються)
-        'server_url': 'http://.../pay-callback/',  # Поки що заглушка
+        # Поки що заглушка
+        'server_url': 'https://semidomestic-verla-unvibrantly.ngrok-free.dev/uk/cart/callback/',
         # Куди повернути клієнта після оплати
         'result_url': 'http://127.0.0.1:8000/cart/success/{}'.format(order.id),
     }
@@ -129,3 +135,45 @@ def payment_success(request, order_id):
     order.save()
 
     return render(request, 'main/order_success.html', {'order': order})
+
+
+# Вимикаємо захист CSRF, бо запит прийде ззовні (від LiqPay), а не з нашого браузера
+@csrf_exempt
+def pay_callback(request):
+    if request.method == 'POST':
+        # Отримуємо дані від LiqPay
+        data = request.POST.get('data')
+        signature = request.POST.get('signature')
+
+        # Створюємо об'єкт LiqPay для перевірки підпису
+        liqpay = LiqPay(settings.LIQPAY_PUBLIC_KEY,
+                        settings.LIQPAY_PRIVATE_KEY)
+
+        # ПЕРЕВІРКА БЕЗПЕКИ: Чи справді це LiqPay, а не хакер?
+        # Формуємо підпис: private_key + data + private_key
+        sign_string = settings.LIQPAY_PRIVATE_KEY + data + settings.LIQPAY_PRIVATE_KEY
+        my_signature = liqpay.str_to_sign(sign_string)
+
+        if my_signature == signature:
+            # Якщо підписи співпали — розшифровуємо дані
+            # data приходить у base64, треба розкодувати в JSON
+            decoded_data = base64.b64decode(data).decode('utf-8')
+            response_json = json.loads(decoded_data)
+
+            # Перевіряємо статус
+            # 'success' - успіх, 'sandbox' - успіх у тестовому режимі
+            status = response_json.get('status')
+
+            if status == 'success' or status == 'sandbox':
+                order_id = response_json.get('order_id')
+
+                try:
+                    order = Order.objects.get(id=order_id)
+                    order.is_paid = True
+                    order.save()
+                    print(
+                        f"Замовлення {order_id} успішно оплачено через Callback!")
+                except Order.DoesNotExist:
+                    print(f"Замовлення {order_id} не знайдено.")
+
+    return HttpResponse()  # Відповідаємо банку "ОК", щоб він не стукав повторно
