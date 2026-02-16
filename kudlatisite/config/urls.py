@@ -25,11 +25,14 @@ urlpatterns = [
 ]
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
-    path("", include(("customer_portal.urls", "customer_portal"), namespace="customer_portal")),
+    path("", include(("customer_portal.urls", "customer_portal"),
+         namespace="customer_portal")),
     path("catalog/", include("catalog.urls")),
     path("account/", include(("accounts.urls",  "accounts"), namespace="accounts")),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('cart/', include('orders.urls', namespace='orders')),
 )
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

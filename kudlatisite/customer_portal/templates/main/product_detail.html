@@ -68,16 +68,31 @@
           {% if product.batch_code %}<li>{% trans "Batch" %}: {{ product.batch_code }}</li>{% endif %}
         </ul>
 
-        <form class="d-flex align-items-center gap-2 mb-4" action="#" method="post">
-          {% csrf_token %}
-          <div class="input-group" style="width: 140px;">
-            <button class="btn btn-outline-secondary" type="button" data-qty="minus">−</button>
-            <input type="number" class="form-control text-center" name="qty" value="1" min="1">
-            <button class="btn btn-outline-secondary" type="button" data-qty="plus">+</button>
-          </div>
-          <button class="btn btn-primary">
-            <iconify-icon icon="uil:shopping-cart"></iconify-icon> {% trans "Add to cart" %}
-          </button>
+        <form class="d-flex align-items-center gap-2 mb-4" action="{% url 'orders:cart_add' product.id %}" method="post">
+            {% csrf_token %}
+            
+            <input type="hidden" name="override" value="False">
+
+            <div class="input-group" style="width: 140px;">
+                <button class="btn btn-outline-secondary" type="button" data-qty="minus">
+                    <iconify-icon icon="uil:minus"></iconify-icon> </button>
+                
+                <input type="number" 
+                      class="form-control text-center" 
+                      name="quantity" 
+                      value="1" 
+                      min="1" 
+                      max="20">
+                      
+                <button class="btn btn-outline-secondary" type="button" data-qty="plus">
+                    <iconify-icon icon="uil:plus"></iconify-icon>
+                </button>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <iconify-icon icon="uil:shopping-cart"></iconify-icon> 
+                {% trans "Add to Cart" %}
+            </button>
         </form>
 
         {% if product.description %}

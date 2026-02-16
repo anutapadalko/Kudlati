@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<section class="py-5 text-center">
+    <div class="container">
+        <div class="icon-box mb-4">
+            <iconify-icon icon="uil:check-circle" style="font-size: 80px; color: green;"></iconify-icon>
+        </div>
+        <h1 class="display-4">Дякуємо!</h1>
+        <p class="lead">Ваше замовлення <strong>#{{ order.id }}</strong> успішно створено.</p>
+        <p>Ми зв'яжемося з вами найближчим часом для підтвердження.</p>
+        
+        <div class="mt-4">
+            <a href="/" class="btn btn-primary text-dark">Повернутися на головну</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

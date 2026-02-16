@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-=h80y_0wkp%0+5cr#5+31a5gt)29r2krdg1g)906dzko4@%y42
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "parler",
     "accounts",
     "catalog",
+    "orders",
     "crm",
     "customer_portal",
 ]
@@ -80,14 +81,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-     "default": {
-         "ENGINE": "django.db.backends.postgresql",
-         "NAME": "kudlatiDb",
-         "USER": "postgres",
-         "PASSWORD": "Qwerty123!@#",
-         "HOST": "localhost",
-         "PORT": "5432",
-     }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "kudlatiDb",
+        "USER": "postgres",
+        "PASSWORD": "unicorn1",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
 }
 
 # Password validation
@@ -118,8 +119,8 @@ LANGUAGES = [('uk', 'Українська'), ('en', 'English')]
 LOCALE_PATHS = [BASE_DIR / 'locale']
 LANGUAGE_COOKIE_NAME = 'django_language'  # опційно
 PARLER_LANGUAGES = {
-    None: ({"code":"uk"}, {"code":"en"}),
-    "default": {"fallbacks":["uk", "en"], "hide_untranslated": False},
+    None: ({"code": "uk"}, {"code": "en"}),
+    "default": {"fallbacks": ["uk", "en"], "hide_untranslated": False},
 }
 
 USE_TZ = True
@@ -146,3 +147,9 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Вітаємо у бек-офісі Kudlati",
     "show_ui_builder": True,
 }
+
+CART_SESSION_ID = 'cart'
+
+# LiqPay Settings
+LIQPAY_PUBLIC_KEY = 'sandbox_i95837243847'
+LIQPAY_PRIVATE_KEY = 'sandbox_4IcGexc3BuJs9ikskAQzLLm9Ol6XasJcQVUE3z5D'
