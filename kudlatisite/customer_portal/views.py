@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.db.models import Prefetch
 from catalog.models import Category, Product, ProductImage
@@ -20,7 +21,9 @@ class SaleView(TemplateView):
 class ShopView(TemplateView):
     template_name = "main/shop.html"
 
-
+    from django.shortcuts import render
+from django.views.generic import TemplateView
+from catalog.models import Category
 
 class CategoriesContextMixin:
     def get_context_data(self, **kwargs):
@@ -34,7 +37,8 @@ class CategoriesContextMixin:
 class IndexView(CategoriesContextMixin, TemplateView):
     template_name = "main/index.html"
 
-
+class SaleView(TemplateView):
+    template_name = "main/sale.html"
 
 class ShopView(TemplateView):
     template_name = "main/shop.html"
@@ -60,4 +64,6 @@ class ShopView(TemplateView):
 class AboutView(TemplateView):
     template_name = "main/about.html"
 
+class AboutView(TemplateView):
+    template_name = "main/about.html"
     

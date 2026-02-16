@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+class PromotionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'discount_percent', 'is_active')
+    filter_horizontal = ('products',)

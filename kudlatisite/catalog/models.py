@@ -146,6 +146,21 @@ class Product(TranslatableModel):
     created_at = models.DateTimeField(_("Створено"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Оновлено"), auto_now=True)
 
+    # Метод для отримання відсотка активної знижки
+    def get_discount_percent(self):
+        # Шукаємо активну акцію, прив'язану до цього товару
+        promo = self.promotions.filter(is_active=True).first()
+        return promo.discount_percent if promo else 0
+
+    # Метод для розрахунку нової ціни
+    def get_sale_price(self):
+        percent = self.get_discount_percent()
+        if percent > 0:
+            # Вираховуємо знижку: Ціна - (Ціна * Відсоток / 100)
+            discount_amount = (self.price * percent) / 100
+            return self.price - discount_amount
+        return self.price
+
     class Meta:
         verbose_name = _("Продукт")
         verbose_name_plural = _("Продукти")
