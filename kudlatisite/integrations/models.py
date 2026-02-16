@@ -10,9 +10,9 @@ class Promotion(models.Model):
 
     products = models.ManyToManyField(
         Product,
-        related_name='promotions',
+        related_name="promotions",
         blank=True,
-        verbose_name="Товари"
+        verbose_name="Товари",
     )
 
     def __str__(self):
