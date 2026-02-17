@@ -1,47 +1,29 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import User, UserRole
-from .models import B2BProfile
+from django.contrib.auth.models import User
+from .models import UserProfile
+from phonenumber_field.formfields import PhoneNumberField
 
-# тип акаунта для вибору при реєстрації
-ACCOUNT_TYPE_CHOICES = [
-    (UserRole.CUSTOMER, "B2C — Покупець"),
-    (UserRole.B2B, "B2B — Бізнес"),
-]
 
-class RegisterUserForm(UserCreationForm):
-    account_type = forms.ChoiceField(
-        choices=ACCOUNT_TYPE_CHOICES,
-        label="Тип акаунта",
-        required=True
-    )
-
+class LoginForm(forms.ModelForm):
+    # overload django password input, make hiding input
+    password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2", "account_type")
+        fields = ("email", "password")
 
-class B2BProfileForm(forms.ModelForm):
+
+class RegisterForm(forms.ModelForm):
+    # include email validation
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True
+
+    phone = PhoneNumberField(region="UA", required=False)
+
+    # overload django password input, make hiding input
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    type = forms.ChoiceField(choices=UserProfile.PROFILE_TYPE)
     class Meta:
-        model = B2BProfile
-        fields = [
-            "company_name",
-            "contact_first_name",
-            "contact_last_name",
-            "email",
-            "phone",
-            "legal_address",
-            "actual_address",
-            "edrpou_or_ipn",
-            "client_type",
-            "min_order_amount",
-            "payment_terms",
-            "delivery_terms",
-            "individual_discount_percent",
-            "contracts_link",
-            "notes",
-        ]
-        widgets = {
-            "notes": forms.Textarea(attrs={"rows": 3, "class": "form-control"}),
-            "legal_address": forms.Textarea(attrs={"rows": 2, "class": "form-control"}),
-            "actual_address": forms.Textarea(attrs={"rows": 2, "class": "form-control"}),
-        }
+        model = User
+        fields = ("email", "password", "first_name", "last_name", "phone", "type")

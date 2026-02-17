@@ -1,82 +1,66 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, DetailView
-from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import FormView, TemplateView
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.contrib.auth import login
-from .forms import RegisterUserForm
-from .models import UserRole, CustomerProfile, B2BProfile
-from django.contrib import messages
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from .forms import B2BProfileForm
-from django.views.generic.edit import UpdateView
-from django.shortcuts import get_object_or_404
-
-class LogInView(LoginView):
-    template_name = "accounts/sign_in.html"
-    authentication_form = AuthenticationForm
-
-    def get_success_url(self):
-        user = self.request.user
-        if user.role == UserRole.B2B:
-            return reverse_lazy('accounts:b2b_profile')
-        return reverse_lazy('accounts:b2c_profile')
+from .forms import LoginForm, RegisterForm
+from .models import UserProfile
 
 
-class RegisterView(CreateView):
-    form_class = RegisterUserForm
-    template_name = "accounts/user_creation.html"
+class LoginView(FormView):
+    form_class = LoginForm
+    template_name = 'login.html'
+    success_url = reverse_lazy('accounts:regular')
 
     def form_valid(self, form):
-        print("✅ form_valid called!")
-        user = form.save(commit=False)
-        user.role = form.cleaned_data["account_type"]
-        user.save()
-        print("✅ user saved:", user)
-
-        # створюємо профіль за типом
-        if user.role == UserRole.CUSTOMER:
-            CustomerProfile.objects.create(user=user, email=user.email)
-        elif user.role == UserRole.B2B:
-            B2BProfile.objects.create(user=user, company_name="Без назви", email=user.email)
-
-        # логінимо користувача
-        login(self.request, user)
-        messages.success(self.request, f"Вітаємо, {user.username}! Ваш акаунт створено.")
-
-        # ДИНАМІЧНЕ ПЕРЕНАПРАВЛЕННЯ
-        if user.role == UserRole.B2B:
-            return redirect("accounts:b2b_profile")
+        email, password = form.cleaned_data['email'], form.cleaned_data['password']
+        user = authenticate(username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
         else:
-            return redirect("accounts:b2c_profile")
+            form.add_error(None, "Email or password incorrect")
+            return self.form_invalid(form)
+    
+    def form_invalid(self, form):
+        form.clean()
+        return super().form_invalid(form)
+
+class RegisterView(FormView):
+    form_class = RegisterForm
+    template_name = "register.html"
+    success_url = reverse_lazy('accounts:login')
+
+    def form_valid(self, form):
+        email, password = form.cleaned_data['email'], form.cleaned_data['password']
+        first_name, last_name = form.cleaned_data['first_name'], form.cleaned_data['last_name']
+        phone = form.cleaned_data['phone']
+        profile_type = form.cleaned_data['type']
+        user = User.objects.create_user(
+            username=email,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name
+        )
+        UserProfile.objects.create(
+            user=user,
+            phone=phone,
+            profile_type=profile_type
+        )
+        print(email, password, phone, first_name, last_name)
+        return super().form_valid(form)
 
     def form_invalid(self, form):
-        print("❌ Form errors:", form.errors)
+        form.clean()
         return super().form_invalid(form)
 
 
-class ProfileView(LoginRequiredMixin, DetailView):
-    template_name = "accounts/b2c_account.html"
-    model = CustomerProfile
-    context_object_name = "profile"
+class RegularProfileView(TemplateView):
+    template_name = 'regular_user.html'
 
-    def get_object(self, queryset=None):
-        return get_object_or_404(CustomerProfile, user=self.request.user)
-
-class B2BProfileView(LoginRequiredMixin, DetailView):
-    model = B2BProfile
-    template_name = "accounts/b2b_account.html"
-    context_object_name = "profile"
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(B2BProfile, user=self.request.user)
-
-class EditB2BProfileView(LoginRequiredMixin, UpdateView):
-    model = B2BProfile
-    form_class = B2BProfileForm
-    template_name = "accounts/edit_b2b_profile.html"
-    success_url = reverse_lazy("accounts:b2b_profile")
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(B2BProfile, user=self.request.user)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        userdata = User.objects.get(id=self.request.user.id)
+        profiledata = UserProfile.objects.get(user=self.request.user.id)
+        context['profiledata'] = {'user': userdata, 'profile': profiledata}
+        return context

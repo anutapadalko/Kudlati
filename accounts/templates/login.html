@@ -1,11 +1,11 @@
 {% extends 'main.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<div class="bg-secondary py-5 my-5 rounded-5"
-     style="background: url('{% static 'images/bg-leaves-img-pattern.png' %}') no-repeat center/cover;">
+<div class="bg-secondary py-5 my-5 rounded-5" style="background: url('{% static 'images/bg-leaves-img-pattern.png' %}') no-repeat center/cover;">
   <div class="container my-5">
     <div class="row align-items-center">
 
@@ -23,23 +23,12 @@
       <div class="col-md-6 p-5">
         <div class="bg-white rounded-4 shadow-lg p-4">
           <h3 class="mb-4 text-center">Увійти в акаунт</h3>
-
+          <!-- LOGIN FORM -->
+          {% block user_form %}
           <form method="post">
             {% csrf_token %}
-            <div class="mb-3">
-              <label for="username" class="form-label">Email або логін</label>
-              <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="you@example.com">
-            </div>
-
-            <div class="mb-3">
-              <label for="password" class="form-label">Пароль</label>
-              <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="••••••••">
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <a href="#" class="text-decoration-none small text-muted">Забули пароль?</a>
-            </div>
-
+            {{ form|crispy }}
+            
             <div class="d-grid mb-3">
               <button type="submit" class="btn btn-dark btn-lg">Увійти</button>
             </div>
@@ -48,10 +37,8 @@
               <a href="{% url 'accounts:register' %}" class="text-decoration-none">Створити акаунт</a>
             </div>
           </form>
+          {% endblock user_form %}
         </div>
       </div>
-
-    </div>
-  </div>
 </div>
 {% endblock %}

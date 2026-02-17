@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
 
 load_dotenv()
 
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'phonenumber_field',
 
     'parler',
     'accounts',
@@ -143,7 +147,7 @@ STATIC_ROOT=os.getenv('STATIC_ROOT')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGOUT_REDIRECT_URL = '/account/login/'
-AUTH_USER_MODEL = "accounts.User"
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -165,3 +169,10 @@ LIQPAY_PRIVATE_KEY = os.getenv('LIQPAY_PRIVATE_KEY')
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_PATH, 'templates'),
+)
+
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
