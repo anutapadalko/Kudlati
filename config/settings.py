@@ -11,19 +11,23 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=h80y_0wkp%0+5cr#5+31a5gt)29r2krdg1g)906dzko4@%y42'
-
+SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 
 # Application definition
@@ -83,11 +87,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "kudlatiDb",
-        "USER": "postgres",
-        "PASSWORD": "unicorn1",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": os.getenv('DB_NAME'),
+        "USER": os.getenv('DB_USER'),
+        "PASSWORD": os.getenv('DB_PASSWORD'),
+        "HOST": os.getenv('DB_HOST'),
+        "PORT": os.getenv('DB_PORT'),
     }
 }
 
@@ -130,6 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT=os.getenv('STATIC_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -151,5 +156,5 @@ JAZZMIN_SETTINGS = {
 CART_SESSION_ID = 'cart'
 
 # LiqPay Settings
-LIQPAY_PUBLIC_KEY = 'sandbox_i95837243847'
-LIQPAY_PRIVATE_KEY = 'sandbox_4IcGexc3BuJs9ikskAQzLLm9Ol6XasJcQVUE3z5D'
+LIQPAY_PUBLIC_KEY = os.getenv('LIQPAY_PUBLIC_KEY')
+LIQPAY_PRIVATE_KEY = os.getenv('LIQPAY_PRIVATE_KEY')
