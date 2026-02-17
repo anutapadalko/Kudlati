@@ -33,20 +33,21 @@ ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 # Application definition
 
 INSTALLED_APPS = [
-    "jazzmin",
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
 
-    "parler",
-    "accounts",
-    "catalog",
-    "orders",
-    "crm",
-    "customer_portal",
+    'parler',
+    'accounts',
+    'catalog',
+    'orders',
+    'crm',
+    'customer_portal',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -158,3 +160,8 @@ CART_SESSION_ID = 'cart'
 # LiqPay Settings
 LIQPAY_PUBLIC_KEY = os.getenv('LIQPAY_PUBLIC_KEY')
 LIQPAY_PRIVATE_KEY = os.getenv('LIQPAY_PRIVATE_KEY')
+
+# Debug toolbar Settings
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
