@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load static i18n %}
 
 {% block content %}
-{% include "main/hello_section.html" %}
-{% include "main/categories.html" %}
+    {% include "main/banner.html" %}
+    {% include "main/categories.html" %}
+    {% include "main/products.html" %}
 {% endblock %}
 
 {% block extra_js %}

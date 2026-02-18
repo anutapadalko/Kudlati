@@ -34,3 +34,9 @@ msgstr "Знижки"
 
 msgid "Category"
 msgstr "Категорія"
+
+msgid "AddressesShops"
+msgstr "Де нас можна знайти"
+
+msgid "EmailToConnect"
+msgstr "Електронна пошта для зв'язку"

@@ -1,0 +1,66 @@
+{% load static i18n %}
+
+<div class="row">
+      <div class="col-md-12">
+
+        <div class="products-carousel swiper">
+          <div class="swiper-wrapper">
+
+            {% for p in products %}
+              <div class="product-item swiper-slide">
+                <a href="#" class="btn-wishlist" aria-label="{% trans 'Add to wishlist' %}">
+                  <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
+                </a>
+
+                <figure>
+                  <a href="{% url 'catalog:product' article=p.article %}" title="{{ p.name }}">
+                    {% with img=p.prefetched_images.0 %}
+                      {% if img %}
+                        <img src="{{ img.image.url }}" alt="{{ img.alt|default:p.name }}" class="tab-image" loading="lazy" decoding="async">
+                      {% else %}
+                        <img src="{% static 'images/product-placeholder.png' %}" alt="{{ p.name }}" class="tab-image" loading="lazy" decoding="async">
+                      {% endif %}
+                    {% endwith %}
+                  </a>
+                </figure>
+
+                <h3 class="mt-2">{{ p.name }}</h3>
+                <span class="qty">{% trans "Volume" %}: {{ p.volume_ml }} ml</span>
+                {# рейтинг, якщо буде — підставиш з моделі/агрегацій #}
+                {# <span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span> #}
+
+                <span class="price">{{ p.price }} ₴</span>
+
+                <form action="{% url 'orders:cart_add' p.id %}" method="post" class="d-flex align-items-center justify-content-between mt-2">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="override" value="False">
+
+                    <div class="input-group product-qty" style="max-width: 120px;"> <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
+                            <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
+                        </button>
+
+                        <input type="text" name="quantity" class="form-control input-number text-center" value="1">
+
+                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
+                            <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="nav-link border-0 bg-transparent p-0 ms-2" title="Додати в кошик">
+                        Add to Cart <iconify-icon icon="uil:shopping-cart" style="font-size: 1.2em;"></iconify-icon>
+                    </button>
+                </form>
+              </div>
+            {% empty %}
+              <div class="swiper-slide">
+                <p class="text-muted m-0">{% trans "No products yet." %}</p>
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+        <!-- / products-carousel -->
+
+      </div>
+    </div>

@@ -1025,7 +1025,6 @@ h6 {
   min-width: 0;
 }
 
-/* Header layout: left + centered search + right */
 .header-bar {
   position: relative;
   display: flex;
@@ -1054,7 +1053,6 @@ h6 {
   z-index: 5;
 }
 
-/* меню трохи далі від логотипа */
 .header-menu {
   margin-left: 1rem;
 }
@@ -1080,8 +1078,6 @@ h6 {
   margin: 0 2px;
 }
 
-
-/* Language switcher – header style */
 .language-buttons {
   position: static;
   top: auto;
@@ -1128,10 +1124,7 @@ h6 {
   background: #fff;
   box-shadow: 0 0 0 1.5px #efefef inset;
   font-weight: 600;
-  /* було 800 */
-  /* можна додати трохи темніший текст */
   color: #222;
-  /* плавний перехід */
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
 
@@ -1139,12 +1132,9 @@ h6 {
   width: auto;
   max-width: none;
   flex: 1 1 auto;
-  /* дозволяє стискатись/розширюватись у flex-контейнері */
   min-width: 0;
-  /* щоб інпут не роздувався */
 }
 
-/* За бажанням — мінімальна ширина на великих екранах */
 @media (min-width: 992px) {
   .search-bar {
     flex-basis: 240px;
@@ -1177,7 +1167,6 @@ h6 {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(0,0,0,.85)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Трохи стислий інпут на мобілі (нижній пошук) */
 @media (max-width: 991.98px) {
   #search-form-m .form-control {
     font-size: 14px;
@@ -1192,7 +1181,7 @@ h6 {
   display: none;
 }
 
-/* Створення CSS-змінних з кольорів brandkit */
+
 .about-hero-v2 {
   position: relative;
   height: 750px;
@@ -1201,7 +1190,6 @@ h6 {
   background-size: cover;
   overflow: hidden;
   margin-top: 0;
-  /* було: calc(var(--header-height-min) * -1) */
 }
 
 .about-hero-v2 .hero-title {
@@ -1248,19 +1236,18 @@ h6 {
   text-align: center;
 }
 
-/* Hero: точніший вигляд Rubik, без глобального letter-spacing */
+
 .about-hero-v2 .hero-title,
 .about-hero-v2 .hero-subtitle,
 .about-hero-v2 .hero-text {
   letter-spacing: 0;
-  /* скидаємо body: 0.03em */
   font-kerning: normal;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Адаптивні правки */
+
 @media (max-width: 991.98px) {
   .about-hero-v2 .hero-title {
     top: 100px;
@@ -1279,7 +1266,7 @@ h6 {
   }
 }
 
-/* Блок з фото (для історії) */
+
 .story-image {
   width: 100%;
   height: 100%;
@@ -1288,7 +1275,7 @@ h6 {
   border-radius: 15px;
 }
 
-/* Картка для філософії */
+
 .philosophy-card {
   background-color: var(--k-white);
   border-radius: 15px;
@@ -1300,11 +1287,9 @@ h6 {
 .philosophy-card-icon {
   font-size: 2.5rem;
   color: var(--k-blue);
-  /* Іконки залишив синіми для акценту */
   margin-bottom: 1rem;
 }
 
-/* Картка для інгредієнтів */
 .ingredient-card {
   background-color: #f8f9fa;
   border-radius: 15px;
@@ -1312,35 +1297,27 @@ h6 {
   height: 100%;
 }
 
-/* ================================================
-  ЗМІНА: Секція "Наша Команда"
-  ================================================
-*/
 .team-card {
   border: none;
-  /* Прибрали фон, тінь та рамку */
   background-color: transparent;
   text-align: center;
 }
 
 .team-card img {
-  /* Зробили фото круглим */
   width: 200px;
   height: 200px;
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 1.5rem;
-  /* Додаємо margin: auto, щоб центрувати, якщо колонка ширша */
   margin-left: auto;
   margin-right: auto;
 }
 
 .team-card-body {
-  /* Прибрали зайві відступи */
   padding: 0;
 }
 
-/* Outline CTA — через змінні Bootstrap */
+
 .btn-outline-k {
   --bs-btn-color: #000;
   --bs-btn-border-color: #000;
@@ -1356,14 +1333,14 @@ h6 {
   --bs-btn-padding-x: 1.5rem;
 }
 
-/* Якщо Bootstrap підключений після style.css */
+
 .btn.btn-outline-k {
   border-width: var(--bs-btn-border-width) !important;
   border-color: var(--bs-btn-border-color) !important;
   border-radius: var(--bs-btn-border-radius) !important;
 }
 
-/* Контейнер картки товару */
+
 .product-item {
   background: #ffffff;
   border-radius: 20px;
@@ -1381,28 +1358,26 @@ h6 {
   transform: translateY(-5px);
 }
 
-/* Обгортка для фото */
+
 .product-item figure {
   margin: 0 0 15px 0;
   padding: 0;
   position: relative;
   height: 250px;
-  /* Фіксована висота для всіх карток */
   width: 100%;
   overflow: hidden;
   border-radius: 15px;
 }
 
-/* Сама картинка (наприклад, твій "dog") */
+
 .product-item figure img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Картинка заповнює блок, не розтягуючись */
   display: block;
 }
 
-/* Червоний бейдж Sale поверх фото */
+
 .badge-sale {
   position: absolute;
   top: 12px;
@@ -1415,4 +1390,57 @@ h6 {
   font-size: 12px;
   text-transform: uppercase;
   z-index: 5;
+}
+
+
+.banner-carousel {
+  position: relative;
+}
+
+
+.banner-carousel .carousel-control-prev,
+.banner-carousel .carousel-control-next {
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1;
+}
+
+.banner-carousel .carousel-control-prev {
+  left: 8px;
+}
+
+.banner-carousel .carousel-control-next {
+  right: 8px;
+}
+
+
+.banner-carousel .carousel-control-prev-icon,
+.banner-carousel .carousel-control-next-icon {
+  background-color: rgba(0,0,0,0.55);
+  border-radius: 50%;
+  padding: 18px;
+  background-size: 60% 60%;
+}
+
+
+.banner-carousel .carousel-control-prev:hover .carousel-control-prev-icon,
+.banner-carousel .carousel-control-next:hover .carousel-control-next-icon {
+  background-color: rgba(0,0,0,0.75);
+}
+
+
+.banner-carousel img,
+#homeCarousel img {
+  height: 420px;
+  object-fit: cover;
+}
+
+.banner-controls .btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  font-size: 18px;
+  line-height: 1;
 }

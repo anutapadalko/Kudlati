@@ -1,7 +1,7 @@
 from django.contrib import admin
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from django.utils.translation import gettext_lazy as _
-from .models import Category, ProductType, CoatType, Product, ProductImage
+from .models import Category, ProductType, CoatType, Product, ProductImage, HomeBanner
 
 
 @admin.register(Category)
@@ -55,16 +55,24 @@ class ProductImageInline(TranslatableTabularInline):
 
 @admin.register(Product)
 class ProductAdmin(TranslatableAdmin):
-    list_display = ("__str__", "sku", "category", "product_type", "coat_type", "price", "stock_qty", "is_active")
+    list_display = ("__str__", "article", "category", "product_type", "coat_type", "price", "stock_qty", "is_active")
     list_filter  = ("is_active", "category", "product_type", "coat_type")
-    search_fields = ("translations__name", "sku", "batch_code")
+    search_fields = ("translations__name", "article", "batch_code")
     readonly_fields = ("created_at", "updated_at")
     inlines = [ProductImageInline]
     fieldsets = (
         (_("Звʼязки"), {"fields": ("category", "product_type", "coat_type")}),
-        (_("Основні"), {"fields": ("sku", "volume_ml", "price", "cost_price", "stock_qty")}),
+        (_("Основні"), {"fields": ("article", "volume_ml", "price", "cost_price", "stock_qty")}),
         (_("Партія"),  {"fields": ("batch_code", "expiry_date")}),
         (_("Статус"),  {"fields": ("is_active",)}),
         (_("Переклади"), {"fields": ("name", "description")}),
         (_("Службові"), {"fields": ("created_at", "updated_at")}),
     )
+
+@admin.register(HomeBanner)
+class HomeBannerAdmin(TranslatableAdmin):
+    list_display = ("title", "order", "is_active")
+    list_editable = ("order", "is_active")
+    search_fields = ("translations__title",)
+
+    fields = ("title", "image", "link", "order", "is_active")

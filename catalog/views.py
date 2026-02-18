@@ -15,7 +15,7 @@ def category_detail(request, slug):
 
     return render(request, "catalog/category_detail.html", {"category": category})
 
-def product_detail(request, sku):
+def product_detail(request, article):
     images_qs = ProductImage.objects.order_by("-is_main", "sort_order", "id")
 
     product = get_object_or_404(
@@ -23,7 +23,7 @@ def product_detail(request, sku):
                .select_related("category", "product_type", "coat_type")
                .prefetch_related("translations",
                                  Prefetch("images", queryset=images_qs, to_attr="prefetched_images")),
-        sku=sku,
+        article=article,
         is_active=True,
     )
 

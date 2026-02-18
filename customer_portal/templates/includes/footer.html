@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n footer_tags %}
 
 <section class="py-5">
     </section>
@@ -9,7 +9,6 @@
 
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="footer-menu">
-          <h5 class="visually-hidden">Kudlati — логотип та соціальні мережі</h5>
           <img src="{% static 'images/icon_k_color.svg' %}" alt="Kudlati logo" style="height:150px;" class="img-fluid">
           <div class="social-links mt-4">
             <ul class="d-flex list-unstyled gap-3">
@@ -40,16 +39,15 @@
 
       <div class="col-md-3 col-sm-6">
         <div class="footer-menu">
-          <h5 class="widget-title text-uppercase fw-semibold mb-3">Компанія</h5>
           <ul class="menu-list list-unstyled">
             <li class="menu-item">
-              <a href="{% url 'customer_portal:about' %}" class="nav-link px-0 link-dark {% if request.path == '/about/' %}fw-semibold{% endif %}">About us</a>
+              <a href="{% url 'customer_portal:about' %}" class="nav-link px-0 link-dark {% if request.path == '/about/' %}fw-semibold{% endif %}">{% trans "AboutUs" %}</a>
             </li>
             <li class="menu-item">
-              <a href="{% url 'customer_portal:shop' %}" class="nav-link px-0 link-dark {% if request.path == '/shop/' %}fw-semibold{% endif %}">Shop</a>
+              <a href="{% url 'customer_portal:shop' %}" class="nav-link px-0 link-dark {% if request.path == '/shop/' %}fw-semibold{% endif %}">{% trans "Shop" %}</a>
             </li>
             <li class="menu-item">
-              <a href="{% url 'customer_portal:sale' %}" class="nav-link px-0 link-dark {% if request.path == '/sale/' %}fw-semibold{% endif %}">Sale</a>
+              <a href="{% url 'customer_portal:sale' %}" class="nav-link px-0 link-dark {% if request.path == '/sale/' %}fw-semibold{% endif %}">{% trans "Sale" %}</a>
             </li>
           </ul>
         </div>
@@ -57,26 +55,17 @@
 
       <div class="col-md-3 col-sm-6">
         <div class="footer-menu">
-          <h5 class="widget-title text-uppercase fw-semibold mb-3">Підтримка</h5>
           <ul class="menu-list list-unstyled">
-            <li class="menu-item">
-              <a href="#" class="nav-link px-0 link-dark">FAQ</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-md-3 col-sm-6">
-        <div class="footer-menu">
-          <h5 class="widget-title text-uppercase fw-semibold mb-3">Співпраця з нами</h5>
-          <ul class="menu-list list-unstyled">
-            <li class="menu-item">
+              <h7 class="widget-title fw-semibold mb-3">{% trans "EmailToConnect" %}: </h7>
               <a href="mailto:kudlatiua@gmail.com" class="nav-link px-0 link-dark">kudlatiua@gmail.com</a>
-            </li>
           </ul>
+            <h7 class="widget-title fw-semibold mb-3">{% trans "AddressesShops" %}: </h7>
+            {% get_shop_addresses as shop_addresses %}
+            {% for s in shop_addresses %}
+              {{ s.address }}
+            {% endfor %}
         </div>
       </div>
-
     </div>
   </div>
 </footer>
