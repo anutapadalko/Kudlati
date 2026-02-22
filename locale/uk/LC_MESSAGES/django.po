@@ -40,3 +40,204 @@ msgstr "Де нас можна знайти"
 
 msgid "EmailToConnect"
 msgstr "Електронна пошта для зв'язку"
+
+msgid "Category"
+msgstr "Категорія"
+
+msgid "Categories"
+msgstr "Категорії"
+
+msgid "Category name"
+msgstr "Назва категорії"
+
+msgid "Slug"
+msgstr "Слаг"
+
+msgid "Icon"
+msgstr "Іконка"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "Sort order"
+msgstr "Порядок сортування"
+
+# --- ProductType ---
+msgid "Product type"
+msgstr "Тип продукту"
+
+msgid "Product types"
+msgstr "Типи продуктів"
+
+msgid "Product type name"
+msgstr "Назва типу продукту"
+
+msgid "Requires coat type"
+msgstr "Вимагає тип шерсті"
+
+# --- CoatType ---
+msgid "Coat type"
+msgstr "Тип шерсті"
+
+msgid "Coat types"
+msgstr "Типи шерсті"
+
+msgid "Coat type name"
+msgstr "Назва типу шерсті"
+
+# --- Product ---
+msgid "Product"
+msgstr "Товар"
+
+msgid "Products"
+msgstr "Товари"
+
+msgid "Product name"
+msgstr "Назва товару"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Article"
+msgstr "Артикул"
+
+msgid "Volume (ml)"
+msgstr "Обʼєм (мл)"
+
+msgid "Price"
+msgstr "Ціна"
+
+msgid "Cost price"
+msgstr "Собівартість"
+
+msgid "Stock quantity"
+msgstr "Кількість на складі"
+
+msgid "Batch code"
+msgstr "Код партії"
+
+msgid "Expiry date"
+msgstr "Термін придатності"
+
+msgid "Created at"
+msgstr "Створено"
+
+msgid "Updated at"
+msgstr "Оновлено"
+
+msgid "Coat type is required for this product type."
+msgstr "Для цього типу продукту потрібно вказати тип шерсті."
+
+# --- ProductImage ---
+msgid "Product image"
+msgstr "Зображення товару"
+
+msgid "Product images"
+msgstr "Зображення товарів"
+
+msgid "Image"
+msgstr "Зображення"
+
+msgid "Alt text"
+msgstr "Альтернативний текст"
+
+msgid "Is main"
+msgstr "Головне"
+
+# --- HomeBanner ---
+msgid "Home banner"
+msgstr "Банер головної сторінки"
+
+msgid "Home banners"
+msgstr "Банери головної сторінки"
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Link"
+msgstr "Посилання"
+
+msgid "Order"
+msgstr "Порядок"
+
+# --- ShopAddress ---
+msgid "Shop address"
+msgstr "Адреса магазину"
+
+msgid "Shop addresses"
+msgstr "Адреси магазинів"
+
+msgid "Address"
+msgstr "Адреса"
+
+msgid "Working hours"
+msgstr "Години роботи"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Email"
+msgstr "Електронна пошта"
+
+msgid "Map link"
+msgstr "Посилання на мапу"
+
+# --- Promotion ---
+msgid "Promotion"
+msgstr "Акція"
+
+msgid "Promotions"
+msgstr "Акції"
+
+msgid "Badge text"
+msgstr "Текст бейджа"
+
+msgid "Discount percent"
+msgstr "Відсоток знижки"
+
+msgid "Starts at"
+msgstr "Початок"
+
+msgid "Ends at"
+msgstr "Кінець"
+
+msgid "Priority"
+msgstr "Пріоритет"
+
+msgid "Products"
+msgstr "Товари"
+
+# --- Admin actions / UI strings (якщо вони у тебе обгорнуті в _() ) ---
+msgid "Promotion"
+msgstr "Акція"
+
+msgid "Add selected products to Promotion (choose in dropdown)"
+msgstr "Додати вибрані товари до акції (оберіть у списку)"
+
+msgid "Remove selected products from Promotion (choose in dropdown)"
+msgstr "Видалити вибрані товари з акції (оберіть у списку)"
+
+msgid "Select a Promotion in the dropdown first."
+msgstr "Спочатку виберіть акцію у випадаючому списку."
+
+# --- Admin fieldsets (у тебе вони вже українською, можна лишити як є) ---
+msgid "Переклади"
+msgstr "Переклади"
+
+msgid "Звʼязки"
+msgstr "Звʼязки"
+
+msgid "Основні"
+msgstr "Основні"
+
+msgid "Партія"
+msgstr "Партія"
+
+msgid "Статус"
+msgstr "Статус"
+
+msgid "Службові"
+msgstr "Службові"
+
+msgid "Товари в акції"
+msgstr "Товари в акції"

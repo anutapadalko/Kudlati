@@ -1,7 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product, ProductImage
-from django.db.models import Prefetch  
+from .models import Category, Product, ProductImage, ProductLike
+from django.db.models import Prefetch
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.views.decorators.http import require_POST
 
+
+SESSION_KEY = "liked_product_ids"
 def category_list(request):
     categories = (Category.objects
                   .filter(is_active=True)
@@ -60,3 +65,49 @@ def category_products(request, slug):
         "products": products,     # шаблон уже очікує це ім’я
         "category": category,     # опційно — щоб змінити заголовок
     })
+
+
+def _session_likes(request) -> set[int]:
+    raw = request.session.get(SESSION_KEY, [])
+    ids = set()
+    for x in raw:
+        try:
+            ids.add(int(x))
+        except (TypeError, ValueError):
+            pass
+    return ids
+
+def _save_session_likes(request, ids: set[int]):
+    request.session[SESSION_KEY] = sorted(ids)
+    request.session.modified = True
+
+@require_POST
+def like_toggle(request, product_id: int):
+    product = get_object_or_404(Product, pk=product_id)
+
+    liked = False
+
+    if request.user.is_authenticated:
+        obj, created = ProductLike.objects.get_or_create(user=request.user, product=product)
+        if created:
+            liked = True
+        else:
+            obj.delete()
+            liked = False
+    else:
+        ids = _session_likes(request)
+        if product.id in ids:
+            ids.remove(product.id)
+            liked = False
+        else:
+            ids.add(product.id)
+            liked = True
+        _save_session_likes(request, ids)
+
+    # якщо це AJAX — повертаємо JSON
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return JsonResponse({"liked": liked, "product_id": product.id})
+
+    # fallback: редірект назад
+    next_url = request.POST.get("next") or request.META.get("HTTP_REFERER") or reverse("customer_portal:shop")
+    return HttpResponseRedirect(next_url)

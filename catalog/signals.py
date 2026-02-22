@@ -1,7 +1,11 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
-from .models import Category, ProductImage, HomeBanner
+from .models import Category, ProductImage, HomeBanner, ProductLike
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
 
+
+SESSION_KEY = "liked_product_ids"
 
 def file_fields(model):
     return [
@@ -62,3 +66,20 @@ for model_cls in (Category, ProductImage, HomeBanner):
     pre_save.connect(track_old_files, sender=model_cls, weak=False)
     post_save.connect(delete_tracked_files, sender=model_cls, weak=False)
     post_delete.connect(delete_current_files, sender=model_cls, weak=False)
+
+
+@receiver(user_logged_in)
+def merge_session_likes_to_db(sender, request, user, **kwargs):
+    ids = request.session.get(SESSION_KEY, [])
+    if not ids:
+        return
+
+    ids = [int(x) for x in ids if str(x).isdigit()]
+    ProductLike.objects.bulk_create(
+        [ProductLike(user=user, product_id=pid) for pid in set(ids)],
+        ignore_conflicts=True,
+    )
+
+    # очистимо session (тепер все в БД)
+    request.session.pop(SESSION_KEY, None)
+    request.session.modified = True

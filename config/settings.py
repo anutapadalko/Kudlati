@@ -79,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',   # додано
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'catalog.context_processors.likes_context'
             ],
             "libraries": {
                 "footer_tags": "catalog.templatetags.footer_tags",

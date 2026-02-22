@@ -3,7 +3,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from .mixins import EnsureTranslationsMixin
-
+from django.utils import timezone
+from django.db.models import Q
+from parler.managers import TranslatableQuerySet, TranslatableManager
+from django.conf import settings
 
 class BaseModel(EnsureTranslationsMixin, TranslatableModel):
     class Meta:
@@ -130,8 +133,20 @@ class Product(BaseModel):
         if self.product_type and self.product_type.requires_coat_type and not self.coat_type:
             raise ValidationError({"coat_type": _("Coat type is required for this product type.")})
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.ensure_all_translations(["name", "description"])
+
+    def get_active_promotion(self, at=None):
+        at = at or timezone.now()
+        return (
+            self.promotions.active(at=at)
+            .order_by("-priority", "-discount_percent", "id")
+            .first()
+        )
+
     def get_discount_percent(self):
-        promo = self.promotions.filter(is_active=True).first()
+        promo = self.get_active_promotion()
         return promo.discount_percent if promo else 0
 
     def get_sale_price(self):
@@ -140,10 +155,6 @@ class Product(BaseModel):
             discount_amount = (self.price * percent) / 100
             return self.price - discount_amount
         return self.price
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.ensure_all_translations(["name", "description"])
 
 
 class ProductImage(BaseModel):
@@ -222,3 +233,63 @@ class ShopAddress(BaseModel):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.ensure_all_translations(["title", "address", "work_hours"])
+
+
+class PromotionQuerySet(TranslatableQuerySet):
+    def active(self, at=None):
+        at = at or timezone.now()
+        return self.filter(is_active=True).filter(
+            Q(starts_at__isnull=True) | Q(starts_at__lte=at),
+            Q(ends_at__isnull=True) | Q(ends_at__gte=at),
+        )
+
+class Promotion(BaseModel):
+    translations = TranslatedFields(
+        title=models.CharField(_("Title"), max_length=200),
+        badge=models.CharField(_("Badge text"), max_length=50, blank=True),
+    )
+
+    slug = models.SlugField(_("Slug"), max_length=140, unique=True)
+    discount_percent = models.PositiveIntegerField(_("Discount percent"), default=0)
+
+    starts_at = models.DateTimeField(_("Starts at"), blank=True, null=True)
+    ends_at = models.DateTimeField(_("Ends at"), blank=True, null=True)
+
+    priority = models.PositiveIntegerField(_("Priority"), default=0)
+    is_active = models.BooleanField(_("Active"), default=True)
+
+    products = models.ManyToManyField(
+        "catalog.Product",
+        related_name="promotions",
+        blank=True,
+        verbose_name=_("Products"),
+    )
+
+    objects = TranslatableManager.from_queryset(PromotionQuerySet)()
+
+    class Meta:
+        verbose_name = _("Promotion")
+        verbose_name_plural = _("Promotions")
+
+class ProductLike(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="product_likes",
+    )
+    product = models.ForeignKey(
+        "catalog.Product",
+        on_delete=models.CASCADE,
+        related_name="likes",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (("user", "product"),)
+        indexes = [
+            models.Index(fields=["user", "product"]),
+            models.Index(fields=["product"]),
+        ]
+
+    def __str__(self):
+        return f"{self.user} ❤ {self.product}"

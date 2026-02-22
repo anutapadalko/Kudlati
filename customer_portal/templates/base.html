@@ -41,3 +41,52 @@
         crossorigin="anonymous"></script>
   </body>
 </html>
+<script>
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+
+  document.addEventListener("click", async function (e) {
+    const btn = e.target.closest(".btn-wishlist[data-like-url]");
+    if (!btn) return;
+
+    e.preventDefault();
+
+    const url = btn.dataset.likeUrl;
+    const csrftoken = getCookie("csrftoken");
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrftoken,
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        body: new URLSearchParams({ next: window.location.href }),
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      const icon = btn.querySelector("i");
+
+      if (data.liked) {
+        btn.classList.add("is-liked");
+        if (icon) {
+          icon.classList.remove("fa-regular");
+          icon.classList.add("fa-solid");
+        }
+      } else {
+        btn.classList.remove("is-liked");
+        if (icon) {
+          icon.classList.remove("fa-solid");
+          icon.classList.add("fa-regular");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>

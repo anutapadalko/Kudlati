@@ -1444,3 +1444,187 @@ h6 {
   font-size: 18px;
   line-height: 1;
 }
+
+/* 1) Однакова висота/кроп картинок */
+.product-figure{
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #f6f6f6;
+  aspect-ratio: 4 / 3;
+}
+
+.product-figure .tab-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 2) Sale badge */
+.badge-sale{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #111;
+  color: #fff;
+}
+
+.product-qty{
+  width: 120px;
+  flex: 0 0 120px;
+}
+
+.product-qty .form-control{
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.product-item .btn.btn-dark{
+  border-radius: 12px;
+}
+
+.product-item .btn.btn-dark:hover{
+  transform: translateY(-1px);
+}
+
+/* Qty control – стиль як на твоєму UI */
+.product-qty {
+  width: 120px;
+  max-width: 120px;
+}
+
+.product-qty .qty-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.product-qty .qty-input {
+  height: 36px;
+  border-top: 1px solid #e6e6e6 !important;
+  border-bottom: 1px solid #e6e6e6 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  box-shadow: none !important;
+}
+
+.product-qty .qty-btn:hover {
+  border-color: #cfcfcf;
+}
+
+.product-qty .qty-btn:active {
+  transform: translateY(1px);
+}
+
+/* щоб не було округлення “капсула” як у bootstrap input-group */
+.product-qty .qty-btn,
+.product-qty .qty-input {
+  border-radius: 8px;
+}
+
+.product-qty .qty-minus {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.product-qty .qty-plus {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.product-qty .qty-input {
+  border-radius: 0;
+}
+
+.btn-wishlist i {
+  font-size: 20px;
+}
+
+.btn-wishlist.is-liked i {
+  color: #E63946; /* як у твоїй sale price */
+}
+
+.btn-wishlist{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:999px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  cursor:pointer;
+}
+
+.btn-wishlist i{
+  font-size:18px;
+}
+
+.btn-wishlist:hover{
+  transform: translateY(-1px);
+}
+
+.btn-wishlist.is-liked i{
+  /* якщо хочеш — можеш залишити без кольору, але так наглядніше */
+  color:#E63946;
+}
+
+.btn-wishlist i { font-size: 18px; line-height: 1; }
+.btn-wishlist.is-liked i { color: #E63946; }
+
+/* Heart on product cards */
+.product-item { position: relative; }
+
+.product-like-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.95);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  padding: 0;
+}
+
+.product-like-btn i {
+  font-size: 18px;
+  line-height: 1;
+  color: #111;
+}
+
+.product-like-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+}
+
+.product-like-btn.is-liked {
+  background: #111;
+  border-color: #111;
+}
+
+.product-like-btn.is-liked i {
+  color: #fff;
+}

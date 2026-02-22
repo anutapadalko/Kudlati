@@ -2,54 +2,119 @@
 {% load static i18n %}
 
 {% block content %}
-<section class="py-5 overflow-hidden">
+<section class="py-5">
   <div class="container-fluid">
+
     <div class="row">
       <div class="col-md-12">
-
-        <div class="section-header d-flex justify-content-between">
-          <h2 class="section-title">
-            {% if category %}{{ category.name }}{% else %}{% trans "Shop" %}{% endif %}
-          </h2>
-          <div class="d-flex align-items-center">
-            <a href="{% url 'catalog:categories' %}" class="btn-link text-decoration-none">
-              {% trans "View All Categories →" %}
+        <div class="section-header d-flex justify-content-between align-items-center mb-4">
+          <h2 class="section-title m-0">{% trans "Shop" %}</h2>
+            <a href="{% url 'customer_portal:shop' %}" class="btn-link text-decoration-none">
+              {% trans "View All Products →" %}
             </a>
-            <div class="swiper-buttons ms-3">
-              <button type="button" class="swiper-prev products-carousel-prev btn btn-primary" aria-label="{% trans 'Previous' %}">❮</button>
-              <button type="button" class="swiper-next products-carousel-next btn btn-primary" aria-label="{% trans 'Next' %}">❯</button>
-            </div>
-          </div>
         </div>
-
       </div>
     </div>
-{% include "main/products.html" %}
+
+    {# FILTER BAR #}
+    <form method="get" class="row g-2 align-items-end mb-4">
+      <div class="col-12 col-md-3">
+        <label class="form-label small text-muted mb-1">{% trans "Search" %}</label>
+        <input name="q" value="{{ request.GET.q|default:'' }}" class="form-control"
+               placeholder="{% trans 'Search products' %}">
+      </div>
+
+      <div class="col-12 col-md-2">
+        <label class="form-label small text-muted mb-1">{% trans "Category" %}</label>
+        <select name="category" class="form-select">
+          <option value="">{% trans "All" %}</option>
+          {% for c in categories %}
+            <option value="{{ c.slug }}" {% if request.GET.category == c.slug %}selected{% endif %}>
+              {{ c.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-12 col-md-2">
+        <label class="form-label small text-muted mb-1">{% trans "Type" %}</label>
+        <select name="type" class="form-select">
+          <option value="">{% trans "All" %}</option>
+          {% for t in product_types %}
+            <option value="{{ t.slug }}" {% if request.GET.type == t.slug %}selected{% endif %}>
+              {{ t.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-6 col-md-1">
+        <label class="form-label small text-muted mb-1">{% trans "Min" %}</label>
+        <input type="number" step="0.01" name="min_price" value="{{ request.GET.min_price|default:'' }}"
+               class="form-control">
+      </div>
+
+      <div class="col-6 col-md-1">
+        <label class="form-label small text-muted mb-1">{% trans "Max" %}</label>
+        <input type="number" step="0.01" name="max_price" value="{{ request.GET.max_price|default:'' }}"
+               class="form-control">
+      </div>
+
+      <div class="col-12 col-md-2">
+        <label class="form-label small text-muted mb-1">{% trans "Sort" %}</label>
+        <select name="sort" class="form-select">
+          <option value="-created_at" {% if request.GET.sort == "-created_at" or not request.GET.sort %}selected{% endif %}>{% trans "New first" %}</option>
+          <option value="price" {% if request.GET.sort == "price" %}selected{% endif %}>{% trans "Price: low → high" %}</option>
+          <option value="-price" {% if request.GET.sort == "-price" %}selected{% endif %}>{% trans "Price: high → low" %}</option>
+          <option value="translations__name" {% if request.GET.sort == "translations__name" %}selected{% endif %}>{% trans "Name A→Z" %}</option>
+          <option value="-translations__name" {% if request.GET.sort == "-translations__name" %}selected{% endif %}>{% trans "Name Z→A" %}</option>
+        </select>
+      </div>
+
+      <div class="col-12 col-md-1">
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" name="sale" value="1" id="saleOnly"
+                 {% if request.GET.sale == "1" %}checked{% endif %}>
+          <label class="form-check-label small" for="saleOnly">{% trans "Sale" %}</label>
+        </div>
+        <button class="btn btn-primary w-100">{% trans "Apply" %}</button>
+      </div>
+    </form>
+
+    {# GRID #}
+    {% include "main/products.html" with products=page_obj %}
+
+    {# PAGINATION #}
+    {% if is_paginated %}
+      <nav class="mt-4" aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">‹</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">‹</span></li>
+          {% endif %}
+
+          <li class="page-item disabled">
+            <span class="page-link">
+              {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+            </span>
+          </li>
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">›</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">›</span></li>
+          {% endif %}
+
+        </ul>
+      </nav>
+    {% endif %}
+
   </div>
 </section>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var el = document.querySelector('.products-carousel');
-    if (!el) return;
-    new Swiper('.products-carousel', {
-      slidesPerView: 4,
-      spaceBetween: 24,
-      navigation: {
-        nextEl: '.products-carousel-next',
-        prevEl: '.products-carousel-prev',
-      },
-      loop: false,
-      breakpoints: {
-        1400: { slidesPerView: 4 },
-        1200: { slidesPerView: 3 },
-        992:  { slidesPerView: 3 },
-        768:  { slidesPerView: 2 },
-        0:    { slidesPerView: 1 }
-      }
-    });
-  });
-</script>
 {% endblock %}

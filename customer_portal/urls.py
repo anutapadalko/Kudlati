@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import IndexView, SaleView, ShopView, AboutView
+from .views import IndexView, SaleView, ShopView, AboutView, WishlistView
 
 app_name = "customer_portal"
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path("shop/", ShopView.as_view(), name="shop"),
     path("about/", AboutView.as_view(), name="about"),
     path('i18n/', include('django.conf.urls.i18n')),
+    path("wishlist/", WishlistView.as_view(), name="wishlist"),
 ]

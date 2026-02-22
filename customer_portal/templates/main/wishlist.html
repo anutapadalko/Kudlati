@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container-fluid">
+
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">{% trans "Wishlist" %}</h2>
+      <a href="{% url 'customer_portal:shop' %}" class="btn-link text-decoration-none">
+        {% trans "Back to shop" %} →
+      </a>
+    </div>
+
+    {% if products %}
+      {% include "main/products.html" with products=products %}
+    {% else %}
+      <p class="text-muted">{% trans "No liked products yet." %}</p>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

@@ -10,9 +10,9 @@
 
           <div class="d-flex align-items-center">
             {% if categories %}
-              <a href="{% url 'catalog:category' slug=categories.0.slug %}" class="btn-link text-decoration-none">
-                {% trans "View All Categories →" %}
-              </a>
+                <a href="{% url 'customer_portal:shop' %}" class="btn-link text-decoration-none">
+                  {% trans "View All Products →" %}
+                </a>
             {% endif %}
             <div class="swiper-buttons">
               <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
