@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<section class="py-5 text-center">
+    <div class="container">
+        <h2>Оплата замовлення</h2>
+        <p>Натисніть кнопку нижче, щоб перейти до безпечної оплати через LiqPay.</p>
+        
+        <form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
+            <input type="hidden" name="data" value="{{ data }}" />
+            <input type="hidden" name="signature" value="{{ signature }}" />
+            
+            <button type="submit" class="btn btn-success btn-lg mt-3">
+                <img src="https://static.liqpay.ua/buttons/logo-small.png" alt="LiqPay" style="height: 20px; margin-right: 10px;">
+                Оплатити карткою
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

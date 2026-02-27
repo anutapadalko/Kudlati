@@ -1,0 +1,168 @@
+{% load static i18n %}
+{% get_current_language as CURRENT_LANG %}
+<header>
+  <div class="container-fluid">
+
+    <div class="header-bar py-1 border-bottom d-none d-lg-flex align-items-center justify-content-between gap-2">
+      <!-- Left: logo -->
+      <div class="left-side d-flex align-items-center">
+        <div class="main-logo">
+          <a href="/"><img src="{% static 'images/icon_k_color.svg' %}" alt="logo" style="height:48px;" class="img-fluid"></a>
+        </div>
+      </div>
+
+      <div class="right-side d-flex align-items-center ms-2 gap-3">
+        <div class="search-bar d-flex align-items-center bg-light rounded-4">
+          <form id="search-form" class="flex-grow-1" action="#" method="get">
+            <input type="text" class="form-control border-0 bg-transparent" placeholder="{% trans 'SearchProducts' %}" />
+          </form>
+          <div class="ms-2 d-flex align-items-center" aria-label="{% trans 'Search' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+            </svg>
+          </div>
+        </div>
+
+        <ul class="header-menu list-unstyled d-lg-flex align-items-center mb-0">
+          <li><a href="{% url 'customer_portal:about' %}" class="nav-link px-0 link-dark {% if request.path == '/about/' %} fw-semibold{% endif %}">{% trans "AboutUs" %}</a></li>
+          <li><a href="{% url 'customer_portal:shop' %}" class="nav-link px-0 link-dark {% if request.path == '/shop/' %} fw-semibold{% endif %}">{% trans "Shop" %}</a></li>
+          <li><a href="/sale/" class="nav-link px-0 link-dark {% if request.path == '/sale/' %} fw-semibold{% endif %}">{% trans "Sale" %}</a></li>
+        </ul>
+
+        <div class="language-buttons d-flex align-items-center me-2">
+          <div class="lang-switch rounded-pill bg-light d-flex align-items-center">
+            <img src="{% static 'images/globe-icon.svg' %}" alt="{% trans 'Language' %}" class="me-2" width="18" height="18">
+            {% with CUR_LANG=CURRENT_LANG|default:"en"|slice:":2" %}
+            <form method="post" action="{% url 'set_language' %}" class="m-0">{% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit" name="language" value="uk" class="lang-btn {% if CUR_LANG == 'uk' %}active{% endif %}">UA</button>
+            </form>
+            <span class="divider">/</span>
+            <form method="post" action="{% url 'set_language' %}" class="m-0">{% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit" name="language" value="en" class="lang-btn {% if CUR_LANG == 'en' %}active{% endif %}">EN</button>
+            </form>
+            {% endwith %}
+          </div>
+        </div>
+
+        <ul class="d-flex list-unstyled m-0">
+           <li>
+              <a href="{% url 'accounts:login' %}" class="rounded-circle bg-light p-2 mx-1">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
+                </svg>
+              </a>
+            </li>
+          <li>
+  <a href="{% url 'customer_portal:wishlist' %}"
+     class="rounded-circle bg-light p-2 mx-1 position-relative"
+     aria-label="{% trans 'Wishlist' %}">
+    <i class="{% if liked_count|default:0 > 0 %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+
+    {% if liked_count|default:0 > 0 %}
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ liked_count }}
+      </span>
+    {% endif %}
+  </a>
+</li>
+        </ul>
+
+        <div class="cart-block text-center d-flex position-relative ms-1">
+          <button class="border-0 bg-transparent p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+            <img src="{% static 'images/shopping-cart.png' %}" alt="{% trans 'Cart' %}" width="24" height="24">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-header d-flex d-lg-none align-items-center justify-content-between py-1 border-bottom">
+      <!-- Лого -->
+      <a href="/" class="d-inline-flex align-items-center">
+        <img src="{% static 'images/icon_k_color.svg' %}" alt="logo" style="height:34px;" class="img-fluid">
+      </a>
+
+      <!-- Мова -->
+      <div class="language-buttons d-flex align-items-center">
+        <div class="lang-switch bg-light rounded-pill d-inline-flex align-items-center px-2 py-1">
+          {% with CUR_LANG=CURRENT_LANG|default:"en"|slice:":2" %}
+          <form method="post" action="{% url 'set_language' %}" class="m-0 d-inline">{% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button type="submit" name="language" value="uk" class="lang-btn {% if CUR_LANG == 'uk' %}active{% endif %}">UA</button>
+          </form>
+          <span class="divider px-1">/</span>
+          <form method="post" action="{% url 'set_language' %}" class="m-0 d-inline">{% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button type="submit" name="language" value="en" class="lang-btn {% if CUR_LANG == 'en' %}active{% endif %}">EN</button>
+          </form>
+          {% endwith %}
+        </div>
+      </div>
+<!-- 
+      <div class="language-buttons d-flex align-items-center">
+  <div class="lang-switch bg-light rounded-pill d-inline-flex align-items-center px-2 py-1">
+    <form method="post" action="{% url 'set_language' %}" class="m-0 d-inline">
+      {% csrf_token %}
+      {# важливо: get_full_path зберігає і ?page=, і інші параметри #}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <button type="submit" name="language" value="uk"
+              class="lang-btn {% if CURRENT_LANG|slice:':2' == 'uk' %}active{% endif %}">UA</button>
+      <span class="divider px-1">/</span>
+      <button type="submit" name="language" value="en"
+              class="lang-btn {% if CURRENT_LANG|slice:':2' == 'en' %}active{% endif %}">EN</button>
+    </form>
+  </div>
+</div> -->
+
+      <!-- Кошик + бургер -->
+      <div class="d-inline-flex align-items-center gap-2">
+        <button class="border-0 bg-transparent p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart" aria-label="{% trans 'Cart' %}">
+          <img src="{% static 'images/shopping-cart.png' %}" alt="{% trans 'Cart' %}" width="22" height="22">
+        </button>
+        
+        <button class="btn p-2 d-lg-none" type="button"
+          data-bs-toggle="collapse" data-bs-target="#mobileMenu"
+          aria-expanded="false" aria-controls="mobileMenu"
+          aria-label="{% trans 'Open menu' %}">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="collapse" id="mobileMenu">
+      <div class="bg-white border-bottom">
+        <ul class="list-unstyled m-0">
+          <li><a class="d-block py-2 px-3 text-decoration-none" href="{% url 'customer_portal:about' %}">{% trans "About Us" %}</a></li>
+          <li><a class="d-block py-2 px-3 text-decoration-none" href="{% url 'customer_portal:shop' %}">{% trans "Shop" %}</a></li>
+          <li><a class="d-block py-2 px-3 text-decoration-none" href="/sale/">{% trans "Sale" %}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="d-lg-none p-2 pt-2">
+      <form id="search-form-m" action="#" method="get">
+        <div class="input-group input-group-sm bg-light rounded-3" style="overflow:hidden;">
+          <input type="text" class="form-control border-0 bg-transparent" placeholder="{% trans 'Search products' %}">
+          <button class="btn border-0" type="submit" aria-label="{% trans 'Search' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  document.addEventListener('click', function(e){
+    if(e.target.closest('#mobileMenu a')){
+      var m = document.querySelector('#mobileMenu');
+      var c = bootstrap.Collapse.getOrCreateInstance(m);
+      c.hide();
+    }
+  });
+</script>

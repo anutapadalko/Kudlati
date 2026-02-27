@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'customer_portal:index' %}">{% trans "Home" %}</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'catalog:category' slug=product.category.slug %}">{{ product.category.name }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+      </ol>
+    </nav>
+
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <div class="card p-3">
+          {% with img=product.prefetched_images.0 %}
+            {% if img %}
+              <img id="pd-main"
+                   src="{{ img.image.url }}"
+                   alt="{{ img.alt|default:product.name }}"
+                   class="img-fluid rounded w-100"
+                   style="aspect-ratio: 1/1; object-fit: contain;">
+            {% else %}
+              <img id="pd-main"
+                   src="{% static 'images/product-placeholder.png' %}"
+                   alt="{{ product.name }}"
+                   class="img-fluid rounded w-100"
+                   style="aspect-ratio: 1/1; object-fit: contain;">
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        {% if product.prefetched_images|length > 1 %}
+          <div class="d-flex gap-2 mt-3 flex-wrap">
+            {% for im in product.prefetched_images %}
+              <button type="button"
+                      class="btn p-0 border rounded pd-thumb"
+                      data-src="{{ im.image.url }}"
+                      aria-label="{% trans 'Show image' %}">
+                <img src="{{ im.image.url }}"
+                     class="rounded"
+                     alt="{{ im.alt|default:product.name }}"
+                     style="width:88px;height:88px;object-fit:contain;">
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-lg-6">
+        <div class="d-flex align-items-start justify-content-between gap-3">
+          <div>
+            <h1 class="h2 mb-1">{{ product.name }}</h1>
+            <div class="text-muted mb-3">article: {{ product.article }}</div>
+          </div>
+
+          <button type="button"
+                  class="btn-wishlist {% if liked_ids and product.id in liked_ids %}is-liked{% endif %}"
+                  data-like-url="{% url 'catalog:like_toggle' product.id %}"
+                  aria-label="{% trans 'Add to wishlist' %}">
+            <i class="{% if liked_ids and product.id in liked_ids %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+          </button>
+        </div>
+
+        {% with discount=product.get_discount_percent %}
+          <div class="d-flex align-items-center gap-3 mb-3">
+            {% if discount > 0 %}
+              <div class="d-flex align-items-baseline gap-2">
+                <span class="h4 m-0 text-decoration-line-through text-muted">{{ product.price }} ₴</span>
+                <span class="h3 m-0">{{ product.get_sale_price|floatformat:2 }} ₴</span>
+              </div>
+              <span class="badge text-bg-dark">-{{ discount }}%</span>
+            {% else %}
+              <span class="h3 m-0">{{ product.price }} ₴</span>
+            {% endif %}
+
+            {% if product.stock_qty > 0 %}
+              <span class="badge text-bg-success">{% trans "In stock" %}: {{ product.stock_qty }}</span>
+            {% else %}
+              <span class="badge text-bg-secondary">{% trans "Out of stock" %}</span>
+            {% endif %}
+          </div>
+        {% endwith %}
+
+        <ul class="list-unstyled small text-muted mb-4">
+          <li>{% trans "Category" %}: {{ product.category.name }}</li>
+          <li>{% trans "Product type" %}: {{ product.product_type.name }}</li>
+          {% if product.coat_type %}<li>{% trans "Coat type" %}: {{ product.coat_type.name }}</li>{% endif %}
+          <li>{% trans "Volume" %}: {{ product.volume_ml }} ml</li>
+          {% if product.expiry_date %}<li>{% trans "Expiry date" %}: {{ product.expiry_date }}</li>{% endif %}
+          {% if product.batch_code %}<li>{% trans "Batch" %}: {{ product.batch_code }}</li>{% endif %}
+        </ul>
+
+        <form class="d-flex align-items-center gap-2 mb-4"
+              action="{% url 'orders:cart_add' product.id %}"
+              method="post">
+          {% csrf_token %}
+          <input type="hidden" name="override" value="False">
+
+          <div class="input-group" style="width: 150px;" data-qty>
+            <button class="btn btn-outline-secondary" type="button" data-qty-btn="minus" aria-label="{% trans 'Decrease quantity' %}">−</button>
+            <input type="text"
+                   class="form-control text-center"
+                   name="quantity"
+                   value="1"
+                   inputmode="numeric"
+                   pattern="[0-9]*"
+                   aria-label="{% trans 'Quantity' %}">
+            <button class="btn btn-outline-secondary" type="button" data-qty-btn="plus" aria-label="{% trans 'Increase quantity' %}">+</button>
+          </div>
+
+          <button type="submit" class="btn btn-dark px-3 d-inline-flex align-items-center gap-1">
+            {% trans "Add to Cart" %}
+            <iconify-icon icon="uil:shopping-cart" style="font-size: 1.2em;"></iconify-icon>
+          </button>
+        </form>
+
+        {% if product.description %}
+          <h5 class="mt-4">{% trans "Description" %}</h5>
+          <div class="text-body-secondary">{{ product.description|linebreaks }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // thumbnails
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('.pd-thumb');
+    if(!btn) return;
+    const src = btn.getAttribute('data-src');
+    const main = document.getElementById('pd-main');
+    if(main && src) main.src = src;
+  });
+
+  // qty +/- (FIX: name="quantity")
+  (function () {
+    function clampQty(v) {
+      v = parseInt(String(v || "1").replace(/[^\d]/g, ""), 10);
+      if (isNaN(v) || v < 1) v = 1;
+      return v;
+    }
+
+    document.addEventListener("click", function (e) {
+      const btn = e.target.closest("[data-qty-btn]");
+      if (!btn) return;
+
+      const wrap = btn.closest("[data-qty]");
+      if (!wrap) return;
+
+      const input = wrap.querySelector('input[name="quantity"]');
+      if (!input) return;
+
+      let val = clampQty(input.value);
+      if (btn.dataset.qtyBtn === "plus") val += 1;
+      if (btn.dataset.qtyBtn === "minus") val = Math.max(1, val - 1);
+
+      input.value = val;
+    });
+
+    document.addEventListener("blur", function (e) {
+      const input = e.target.closest('[data-qty] input[name="quantity"]');
+      if (!input) return;
+      input.value = clampQty(input.value);
+    }, true);
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% load static i18n footer_tags %}
+
+
+<footer class="py-5 bg-white text-dark border-top">
+  <div class="container-fluid px-4 px-md-5">
+    <div class="row g-4">
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer-menu">
+          <img src="{% static 'images/icon_k_color.svg' %}" alt="Kudlati logo" style="height:150px;" class="img-fluid">
+          <div class="social-links mt-4">
+            <ul class="d-flex list-unstyled gap-3">
+              <li>
+                <a href="https://www.instagram.com/kudlati.ua?utm_source=ig_web_button_share_sheet&igsh=aHRjZGthNTUweWl4"
+                   class="text-decoration-none text-dark"
+                   target="_blank" rel="noopener" aria-label="Instagram">
+                   <i class="fab fa-instagram" style="font-size: 20px;"></i>
+                  </a>
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  target="_blank" rel="noopener" aria-label="YouTube">
+                  <i class="fab fa-youtube" style="font-size: 20px;"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/people/Kudlati/61583287853431/"
+                  class="text-decoration-none text-dark"
+                  target="_blank" rel="noopener" aria-label="Facebook">
+                  <i class="fab fa-facebook-f" style="font-size: 20px;"></i>
+                </a>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="footer-menu">
+          <ul class="menu-list list-unstyled">
+            <li class="menu-item">
+              <a href="{% url 'customer_portal:about' %}" class="nav-link px-0 link-dark {% if request.path == '/about/' %}fw-semibold{% endif %}">{% trans "AboutUs" %}</a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'customer_portal:shop' %}" class="nav-link px-0 link-dark {% if request.path == '/shop/' %}fw-semibold{% endif %}">{% trans "Shop" %}</a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'customer_portal:sale' %}" class="nav-link px-0 link-dark {% if request.path == '/sale/' %}fw-semibold{% endif %}">{% trans "Sale" %}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <div class="footer-menu">
+          <ul class="menu-list list-unstyled">
+              <h7 class="widget-title fw-semibold mb-3">{% trans "EmailToConnect" %}: </h7>
+              <a href="mailto:kudlatiua@gmail.com" class="nav-link px-0 link-dark">kudlatiua@gmail.com</a>
+          </ul>
+            <h7 class="widget-title fw-semibold mb-3">{% trans "AddressesShops" %}: </h7>
+            {% get_shop_addresses as shop_addresses %}
+            {% for s in shop_addresses %}
+              {{ s.address }}
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

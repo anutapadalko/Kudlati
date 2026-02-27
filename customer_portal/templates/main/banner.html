@@ -1,0 +1,27 @@
+{% load static i18n %}
+
+{% if banners %}
+    <section class="py-5 overflow-hidden">
+<div id="homeCarousel" class="carousel slide banner-carousel" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for b in banners %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        {% if b.link %}<a href="{{ b.link }}">{% endif %}
+          <img src="{{ b.image.url }}" class="d-block w-100" alt="{{ b.title|default:'' }}">
+        {% if b.link %}</a>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="banner-controls d-flex justify-content-center gap-3 mt-3">
+  <button class="btn btn-outline-dark" type="button"
+          data-bs-target="#homeCarousel" data-bs-slide="prev">
+    ❮
+  </button>
+  <button class="btn btn-outline-dark" type="button"
+          data-bs-target="#homeCarousel" data-bs-slide="next">
+    ❯
+  </button>
+</div>
+    </section>
+{% endif %}

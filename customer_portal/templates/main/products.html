@@ -1,0 +1,112 @@
+{% load static i18n %}
+
+<div class="row g-4">
+  {% for p in products %}
+    <div class="col-12 col-sm-6 col-lg-3">
+      <div class="product-item h-100 position-relative">
+
+        <button type="button"
+                class="btn-wishlist product-like-btn {% if liked_ids and p.id in liked_ids %}is-liked{% endif %}"
+                data-like-url="{% url 'catalog:like_toggle' p.id %}"
+                aria-label="{% trans 'Add to wishlist' %}">
+          <i class="{% if liked_ids and p.id in liked_ids %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+        </button>
+
+        <figure class="product-figure">
+          <a href="{% url 'catalog:product' article=p.article %}" title="{{ p.name }}">
+            {% with img=p.prefetched_images.0 %}
+              {% if img %}
+                <img src="{{ img.image.url }}"
+                     alt="{{ img.alt|default:p.name }}"
+                     class="tab-image"
+                     loading="lazy" decoding="async">
+              {% else %}
+                <img src="{% static 'images/product-placeholder.png' %}"
+                     alt="{{ p.name }}"
+                     class="tab-image"
+                     loading="lazy" decoding="async">
+              {% endif %}
+            {% endwith %}
+          </a>
+
+          {% if p.get_discount_percent > 0 %}
+            <span class="badge badge-sale">Sale</span>
+          {% endif %}
+        </figure>
+
+        <h3 class="mt-2">{{ p.name }}</h3>
+        <span class="qty">{% trans "Volume" %}: {{ p.volume_ml }} ml</span>
+
+        <span class="price">{{ p.price }} ₴</span>
+
+        <form action="{% url 'orders:cart_add' p.id %}" method="post"
+              class="d-flex align-items-center justify-content-between mt-2 gap-2">
+          {% csrf_token %}
+          <input type="hidden" name="override" value="False">
+
+          <div class="input-group product-qty" data-qty>
+  <button type="button" class="qty-btn qty-minus" data-qty-btn="minus" aria-label="{% trans 'Decrease quantity' %}">−</button>
+
+  <input
+    type="text"
+    name="quantity"
+    class="form-control qty-input text-center"
+    value="1"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    aria-label="{% trans 'Quantity' %}"
+  >
+
+  <button type="button" class="qty-btn qty-plus" data-qty-btn="plus" aria-label="{% trans 'Increase quantity' %}">+</button>
+</div>
+
+          <button type="submit" class="btn btn-dark btn-sm px-3 d-inline-flex align-items-center gap-1">
+            {% trans "Add to Cart" %}
+            <iconify-icon icon="uil:shopping-cart" style="font-size: 1.2em;"></iconify-icon>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <p class="text-muted m-0">{% trans "No products yet." %}</p>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  (function () {
+    function clampQty(v) {
+      v = parseInt(String(v || "1").replace(/[^\d]/g, ""), 10);
+      if (isNaN(v) || v < 1) v = 1;
+      return v;
+    }
+
+    document.addEventListener("click", function (e) {
+      const btn = e.target.closest("[data-qty-btn]");
+      if (!btn) return;
+
+      const wrap = btn.closest("[data-qty]");
+      if (!wrap) return;
+
+      const input = wrap.querySelector('input[name="quantity"]');
+      if (!input) return;
+
+      let val = clampQty(input.value);
+
+      if (btn.dataset.qtyBtn === "plus") val += 1;
+      if (btn.dataset.qtyBtn === "minus") val = Math.max(1, val - 1);
+
+      input.value = val;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+
+    // якщо користувач руками вписав 0/порожньо/букви
+    document.addEventListener("blur", function (e) {
+      const input = e.target.closest('[data-qty] input[name="quantity"]');
+      if (!input) return;
+      input.value = clampQty(input.value);
+    }, true);
+  })();
+</script>
